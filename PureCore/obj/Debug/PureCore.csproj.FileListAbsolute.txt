@@ -1,6 +1,0 @@
-V:\01_proj\03_vc(shigeki)\01_src\02_src\Pure\PureCore\obj\Debug\PureCore.csproj.CoreCompileInputs.cache
-V:\01_proj\03_vc(shigeki)\01_src\02_src\Pure\PureCore\bin\Debug\PureCore.dll.config
-V:\01_proj\03_vc(shigeki)\01_src\02_src\Pure\PureCore\bin\Debug\PureCore.dll
-V:\01_proj\03_vc(shigeki)\01_src\02_src\Pure\PureCore\bin\Debug\PureCore.pdb
-V:\01_proj\03_vc(shigeki)\01_src\02_src\Pure\PureCore\obj\Debug\PureCore.dll
-V:\01_proj\03_vc(shigeki)\01_src\02_src\Pure\PureCore\obj\Debug\PureCore.pdb
