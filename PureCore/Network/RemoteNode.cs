@@ -17,7 +17,7 @@ namespace Pure.Network
         internal event EventHandler<IPEndPoint[]> NewPeers;
 
         private LocalNode localNode;
-        private TcpClient tcp = new TcpClient();
+        private TcpClient tcp;
         private BinaryReader reader;
         private BinaryWriter writer;
         private bool connected = false;
@@ -30,7 +30,15 @@ namespace Pure.Network
         internal RemoteNode(LocalNode localNode, IPEndPoint remoteEndpoint)
         {
             this.localNode = localNode;
+            this.tcp = new TcpClient();
             this.RemoteEndpoint = remoteEndpoint;
+        }
+
+        internal RemoteNode(LocalNode localNode, TcpClient tcp)
+        {
+            this.localNode = localNode;
+            this.tcp = tcp;
+            OnConnected();
         }
 
         internal async Task ConnectAsync()
@@ -44,9 +52,8 @@ namespace Pure.Network
                 Disconnect(true);
                 return;
             }
-            reader = new BinaryReader(tcp.GetStream(), Encoding.UTF8, true);
-            writer = new BinaryWriter(tcp.GetStream(), Encoding.UTF8, true);
-            connected = true;
+
+            OnConnected();
             await StartProtocolAsync();
         }
 
@@ -70,6 +77,13 @@ namespace Pure.Network
         public void Dispose()
         {
             Disconnect(false);
+        }
+
+        private void OnConnected()
+        {
+            reader = new BinaryReader(tcp.GetStream(), Encoding.UTF8, true);
+            writer = new BinaryWriter(tcp.GetStream(), Encoding.UTF8, true);
+            connected = true;
         }
 
         private void ReceiveLoop()

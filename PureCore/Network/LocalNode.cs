@@ -17,7 +17,7 @@ namespace Pure.Network
         private const int CONNECTED_MAX = 100;
         private const int PENDING_MAX = CONNECTED_MAX;
         private const int UNCONNECTED_MAX = 5000;
-        public const int DEFAULT_PORT = 10333;
+        public const int DEFAULT_PORT = 10909;
 
         private static readonly string path_state = Path.Combine(AppDomain.CurrentDomain.SetupInformation.ApplicationBase, "Data", "node.dat");
         private static readonly string[] SeedList =
@@ -56,7 +56,7 @@ namespace Pure.Network
                 port = DEFAULT_PORT;
             this.LocalEndpoint = new IPEndPoint(Dns.GetHostEntry(Dns.GetHostName()).AddressList.FirstOrDefault(p => p.AddressFamily == AddressFamily.InterNetwork), port);
             this.connectWorker = new Worker(string.Format("ConnectToPeersLoop@{0}", LocalEndpoint), ConnectToPeersLoop, true, TimeSpan.FromSeconds(5), TimeSpan.FromSeconds(5));
-            this.UserAgent = string.Format("/AntSharesCore:{0}/", Assembly.GetExecutingAssembly().GetName().Version.ToString(3));
+            this.UserAgent = string.Format("/PureCore:{0}/", Assembly.GetExecutingAssembly().GetName().Version.ToString(3));
         }
 
         public async Task ConnectToPeerAsync(IPEndPoint remoteEndpoint)
@@ -230,7 +230,7 @@ namespace Pure.Network
             }
         }
 
-        public void Start()
+        public async void Start()
         {
             if (Interlocked.Exchange(ref started, 1) == 0)
             {
@@ -250,6 +250,16 @@ namespace Pure.Network
                 }
                 connectWorker.Start();
                 listener.Start();
+
+                while (disposed == 0)
+                {
+                    RemoteNode remoteNode = new RemoteNode(this, await listener.AcceptTcpClientAsync());
+                    lock (pendingPeers)
+                    {
+                        pendingPeers.Add(remoteNode);
+                    }
+                    remoteNode.StartProtocolAsync().Void();
+                }
             }
         }
     }
