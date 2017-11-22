@@ -17,7 +17,7 @@ namespace Pure.Network
         private const int CONNECTED_MAX = 100;
         private const int PENDING_MAX = CONNECTED_MAX;
         private const int UNCONNECTED_MAX = 5000;
-        public const int DEFAULT_PORT = 10333;
+        public const int DEFAULT_PORT = 10909;
 
         private static readonly string path_state = Path.Combine(AppDomain.CurrentDomain.SetupInformation.ApplicationBase, "Data", "node.dat");
         internal static readonly IPEndPoint localEndpoint = new IPEndPoint(Dns.GetHostEntry(Dns.GetHostName()).AddressList.FirstOrDefault(p => p.AddressFamily == AddressFamily.InterNetwork), DEFAULT_PORT);
