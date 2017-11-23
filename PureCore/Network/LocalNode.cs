@@ -22,7 +22,7 @@ namespace Pure.Network
         private static readonly string path_state = Path.Combine(AppDomain.CurrentDomain.SetupInformation.ApplicationBase, "Data", "node.dat");
         private static readonly string[] SeedList =
         {
-            "192.168.5.90",
+            "192.168.5.101",
             ///"seed1.pure.org",
             ///"seed2.pure.org",
             ///"seed3.pure.org",
