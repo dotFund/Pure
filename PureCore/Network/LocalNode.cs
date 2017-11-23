@@ -13,7 +13,7 @@ namespace Pure.Network
 {
     public class LocalNode : IDisposable
     {
-        public const byte PROTOCOL_VERSION = 0x00;
+        public const UInt32 PROTOCOL_VERSION = 0;
         private const int CONNECTED_MAX = 100;
         private const int PENDING_MAX = CONNECTED_MAX;
         private const int UNCONNECTED_MAX = 5000;
@@ -22,11 +22,12 @@ namespace Pure.Network
         private static readonly string path_state = Path.Combine(AppDomain.CurrentDomain.SetupInformation.ApplicationBase, "Data", "node.dat");
         private static readonly string[] SeedList =
         {
-            "seed1.pure.org",
-            "seed2.pure.org",
-            "seed3.pure.org",
-            "seed4.pure.org",
-            "seed5.pure.org"
+            "192.168.5.90",
+            ///"seed1.pure.org",
+            ///"seed2.pure.org",
+            ///"seed3.pure.org",
+            ///"seed4.pure.org",
+            ///"seed5.pure.org"
         };
 
         private HashSet<IPEndPoint> unconnectedPeers = new HashSet<IPEndPoint>();
@@ -122,11 +123,17 @@ namespace Pure.Network
                 {
                     foreach (string hostNameOrAddress in SeedList)
                     {
-                        IPAddress ipAddress = Dns.GetHostEntry(hostNameOrAddress).AddressList.FirstOrDefault();
+                        IPAddress ipAddress = IPAddress.Parse(hostNameOrAddress);
                         if (ipAddress != null)
                         {
                             tasks.Add(ConnectToPeerAsync(new IPEndPoint(ipAddress, DEFAULT_PORT)));
                         }
+
+                        //IPAddress ipAddress = Dns.GetHostEntry(hostNameOrAddress).AddressList.FirstOrDefault();
+                        //if (ipAddress != null)
+                        //{
+                        //   tasks.Add(ConnectToPeerAsync(new IPEndPoint(ipAddress, DEFAULT_PORT)));
+                        //}
                     }
                 }
                 Task.WaitAll(tasks.ToArray());
