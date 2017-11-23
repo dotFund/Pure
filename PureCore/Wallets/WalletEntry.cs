@@ -1,4 +1,5 @@
-﻿using Pure.Cryptography;
+﻿using Pure.Core;
+using Pure.Cryptography;
 using System;
 using System.Security.Cryptography;
 
@@ -14,7 +15,7 @@ namespace Pure.Wallets
         {
             this.PrivateKey = privateKey;
             this.RedeemScript = redeemScript;
-            this.ScriptHash = new UInt160(redeemScript.Sha256().RIPEMD160());
+            this.ScriptHash = redeemScript.ToScriptHash();
             foreach (byte[] data in privateKey)
             {
                 ProtectedMemory.Protect(data, MemoryProtectionScope.SameProcess);

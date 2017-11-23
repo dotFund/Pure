@@ -109,5 +109,23 @@ namespace Pure.Core
             writer.WriteVarInt(Script.Length); writer.Write(Script);
             writer.Write(Transactions);
         }
+
+        byte[] ISignable.ToUnsignedArray()
+        {
+            using (MemoryStream ms = new MemoryStream())
+            using (BinaryWriter writer = new BinaryWriter(ms))
+            {
+                writer.Write(Version);
+                writer.Write(PrevBlock);
+                writer.Write(MerkleRoot);
+                writer.Write(Timestamp);
+                writer.Write(Bits);
+                writer.Write(Nonce);
+                writer.Write(Miner);
+                writer.Write(Transactions);
+                writer.Flush();
+                return ms.ToArray();
+            }
+        }
     }
 }

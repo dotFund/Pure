@@ -2,11 +2,11 @@
 
 namespace Pure.Core
 {
-    [Flags]
     public enum RegisterType : byte
     {
-        Share = 1 << 0,
-        Currency = 1 << 1,
-        Token = 1 << 2
+        System = 0,
+        Share = 0x10,
+        Currency = 0x20,
+        Token = 0x40,
     }
 }
