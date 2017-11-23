@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace Pure
 {
-    public class UInt160 : UIntBase, IComparable<UInt160>
+    public class UInt160 : UIntBase, IComparable<UInt160>, IEquatable<UInt160>
     {
         public static readonly UInt160 Zero = new UInt160();
 
@@ -32,8 +32,12 @@ namespace Pure
             return 0;
         }
 
+        bool IEquatable<UInt160>.Equals(UInt160 other)
+        {
+            return Equals(other);
+        }
 
-        public static UInt160 Parse(string value)
+        public static new UInt160 Parse(string value)
         {
             if (value == null)
                 throw new ArgumentNullException();

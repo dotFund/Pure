@@ -1,30 +1,60 @@
 ﻿using Pure.IO;
+using Pure.IO.Json;
+using Pure.VM;
+using Pure.Wallets;
 using System;
 using System.IO;
 
 namespace Pure.Core
 {
-    public class TransactionOutput : ISerializable
+    /// <summary>
+    /// 交易输出
+    /// </summary>
+    public class TransactionOutput : IInteropInterface, ISerializable
     {
-        public UInt256 AssetType;
-        public byte AssetAttribute;
-        public Int64 Value;
+        /// <summary>
+        /// 资产编号
+        /// </summary>
+        public UInt256 AssetId;
+        /// <summary>
+        /// 金额
+        /// </summary>
+        public Fixed8 Value;
+        /// <summary>
+        /// 收款地址
+        /// </summary>
         public UInt160 ScriptHash;
+
+        public int Size => AssetId.Size + Value.Size + ScriptHash.Size;
 
         void ISerializable.Deserialize(BinaryReader reader)
         {
-            this.AssetType = reader.ReadSerializable<UInt256>();
-            this.AssetAttribute = reader.ReadByte();
-            this.Value = reader.ReadInt64();
+            this.AssetId = reader.ReadSerializable<UInt256>();
+            this.Value = reader.ReadSerializable<Fixed8>();
+            if (Value <= Fixed8.Zero) throw new FormatException();
             this.ScriptHash = reader.ReadSerializable<UInt160>();
         }
 
         void ISerializable.Serialize(BinaryWriter writer)
         {
-            writer.Write(AssetType);
-            writer.Write(AssetAttribute);
+            writer.Write(AssetId);
             writer.Write(Value);
             writer.Write(ScriptHash);
+        }
+
+        /// <summary>
+        /// 将交易输出转变为json对象
+        /// </summary>
+        /// <param name="index">该交易输出在交易中的索引</param>
+        /// <returns>返回json对象</returns>
+        public JObject ToJson(ushort index)
+        {
+            JObject json = new JObject();
+            json["n"] = index;
+            json["asset"] = AssetId.ToString();
+            json["value"] = Value.ToString();
+            json["address"] = Wallet.ToAddress(ScriptHash);
+            return json;
         }
     }
 }

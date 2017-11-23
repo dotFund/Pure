@@ -6,11 +6,15 @@ using System.Text;
 
 namespace Pure.IO.Json
 {
-    internal class JArray : JObject, IList<JObject>
+    public class JArray : JObject, IList<JObject>
     {
         private List<JObject> items = new List<JObject>();
 
-        public JArray(params JObject[] items)
+        public JArray(params JObject[] items) : this((IEnumerable<JObject>)items)
+        {
+        }
+
+        public JArray(IEnumerable<JObject> items)
         {
             this.items.AddRange(items);
         }
@@ -116,7 +120,10 @@ namespace Pure.IO.Json
             sb.Append('[');
             foreach (JObject item in items)
             {
-                sb.Append(item);
+                if (item == null)
+                    sb.Append("null");
+                else
+                    sb.Append(item);
                 sb.Append(',');
             }
             if (items.Count == 0)

@@ -1,13 +1,13 @@
-﻿using Pure.IO;
-using System;
+﻿using System;
 using System.IO;
 
 namespace Pure.Core
 {
+    /// <summary>
+    /// 合约交易，这是最常用的一种交易
+    /// </summary>
     public class ContractTransaction : Transaction
     {
-        public TransactionAttribute[] Attributes;
-
         public ContractTransaction()
             : base(TransactionType.ContractTransaction)
         {
@@ -15,17 +15,7 @@ namespace Pure.Core
 
         protected override void DeserializeExclusiveData(BinaryReader reader)
         {
-            this.Attributes = reader.ReadSerializableArray<TransactionAttribute>();
-        }
-
-        public override UInt160[] GetScriptHashesForVerifying()
-        {
-            throw new NotImplementedException();
-        }
-
-        protected override void SerializeExclusiveData(BinaryWriter writer)
-        {
-            writer.Write(Attributes);
+            if (Version != 0) throw new FormatException();
         }
     }
 }

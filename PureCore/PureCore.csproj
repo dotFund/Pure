@@ -1,105 +1,75 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+<Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{FD9B81F4-3F8B-4C56-B6BD-0C0E39E125CB}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <RootNamespace>PureCore</RootNamespace>
+    <Copyright>2017-2018 The Pure Project</Copyright>
+    <AssemblyTitle>Neo</AssemblyTitle>
+    <Version>1.0.1</Version>
+    <Authors>The Pure Project</Authors>
+    <TargetFrameworks>netstandard1.6;net461</TargetFrameworks>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <AssemblyName>PureCore</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <PackageId>PureCore</PackageId>
+    <PackageTags>Pure;Blockchain;Smart Contract</PackageTags>
+    <PackageProjectUrl>https://github.com/dotFund/Pure</PackageProjectUrl>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/dotFund/Pure.git</RepositoryUrl>
+    <NetStandardImplicitPackageVersion Condition=" '$(TargetFramework)' == 'netstandard1.6' ">1.6.1</NetStandardImplicitPackageVersion>
+    <RootNamespace>PureCore</RootNamespace>
+    <Company>The Pure Project</Company>
+    <Description>Pure</Description>
+    <AssemblyVersion>1.0.1.0</AssemblyVersion>
+    <FileVersion>1.0.1.0</FileVersion>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|netstandard1.6|AnyCPU'">
+    <DefineConstants>RELEASE;NETSTANDARD1_6</DefineConstants>
+    <DebugType>none</DebugType>
+    <DebugSymbols>False</DebugSymbols>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup>
-    <StartupObject />
-  </PropertyGroup>
+
   <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
+    <None Update="protocol.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <PackagePath>content</PackagePath>
+      <Pack>true</Pack>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Server.Kestrel" Version="1.1.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Server.Kestrel.Https" Version="1.1.1" />
+    <PackageReference Include="Microsoft.AspNetCore.WebSockets" Version="1.0.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="1.0.3" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="1.0.2" />
+    <PackageReference Include="System.Net.Sockets" Version="4.3.0" />
+    <PackageReference Include="System.Security.SecureString" Version="4.0.0" />
+    <PackageReference Include="System.ValueTuple" Version="4.3.1" />
+  </ItemGroup>
+
+  <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard1.6' ">
+    <PackageReference Include="System.Linq.Parallel" Version="4.0.1" />
+    <PackageReference Include="System.Net.NameResolution" Version="4.0.0" />
+    <PackageReference Include="System.Net.NetworkInformation" Version="4.1.0" />
+    <PackageReference Include="System.Net.Requests" Version="4.0.11" />
+    <PackageReference Include="System.Xml.XPath.XmlDocument" Version="4.0.1" />
+  </ItemGroup>
+
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net461' ">
     <Reference Include="System.Numerics" />
     <Reference Include="System.Security" />
-    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System" />
+    <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)' == 'net461'">
+    <PackageReference Include="Replicon.Cryptography.SCrypt">
+      <Version>1.1.6.13</Version>
+    </PackageReference>
+  </ItemGroup>
+
   <ItemGroup>
-    <Compile Include="Core\AgencyTransaction.cs" />
-    <Compile Include="Core\Block.cs" />
-    <Compile Include="Core\Blockchain.cs" />
-    <Compile Include="Core\ContractTransaction.cs" />
-    <Compile Include="Core\GenerationTransaction.cs" />
-    <Compile Include="Core\Helper.cs" />
-    <Compile Include="Core\ISignable.cs" />
-    <Compile Include="Core\MultiSigContext.cs" />
-    <Compile Include="Core\Order.cs" />
-    <Compile Include="Core\RegisterTransaction.cs" />
-    <Compile Include="Core\RegisterType.cs" />
-    <Compile Include="Core\Scripts\ScriptBuilder.cs" />
-    <Compile Include="Core\Scripts\ScriptEngine.cs" />
-    <Compile Include="Core\Scripts\ScriptOp.cs" />
-    <Compile Include="Core\Scripts\Stack.cs" />
-    <Compile Include="Core\SignatureContext.cs" />
-    <Compile Include="Core\Transaction.cs" />
-    <Compile Include="Core\TransactionAttribute.cs" />
-    <Compile Include="Core\TransactionAttributeUsage.cs" />
-    <Compile Include="Core\TransactionInput.cs" />
-    <Compile Include="Core\TransactionOutput.cs" />
-    <Compile Include="Core\TransactionType.cs" />
-    <Compile Include="Cryptography\Base58.cs" />
-    <Compile Include="Cryptography\Helper.cs" />
-    <Compile Include="Cryptography\MerkleTree.cs" />
-    <Compile Include="Cryptography\Secp256r1Curve.cs" />
-    <Compile Include="Cryptography\Secp256r1Element.cs" />
-    <Compile Include="Cryptography\Secp256r1Point.cs" />
-    <Compile Include="Helper.cs" />
-    <Compile Include="IO\Helper.cs" />
-    <Compile Include="IO\ISerializable.cs" />
-    <Compile Include="IO\Json\JArray.cs" />
-    <Compile Include="IO\Json\JBoolean.cs" />
-    <Compile Include="IO\Json\JNull.cs" />
-    <Compile Include="IO\Json\JNumber.cs" />
-    <Compile Include="IO\Json\JObject.cs" />
-    <Compile Include="IO\Json\JString.cs" />
-    <Compile Include="Network\LocalNode.cs" />
-    <Compile Include="Network\Message.cs" />
-    <Compile Include="Network\Payloads\AddrPayload.cs" />
-    <Compile Include="Network\Payloads\GetDataPayload.cs" />
-    <Compile Include="Network\Payloads\InventoryType.cs" />
-    <Compile Include="Network\Payloads\InventoryVector.cs" />
-    <Compile Include="Network\Payloads\NetworkAddressWithTime.cs" />
-    <Compile Include="Network\Payloads\VersionPayload.cs" />
-    <Compile Include="Network\RemoteNode.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Threading\Helper.cs" />
-    <Compile Include="Threading\Worker.cs" />
-    <Compile Include="UInt160.cs" />
-    <Compile Include="UInt256.cs" />
-    <Compile Include="UIntBase.cs" />
-    <Compile Include="Wallets\ProtectionContext.cs" />
-    <Compile Include="Wallets\Wallet.cs" />
-    <Compile Include="Wallets\WalletEntry.cs" />
+    <ProjectReference Include="..\PureVM\PureVM.csproj" />
   </ItemGroup>
-  <ItemGroup>
-    <None Include="App.config" />
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+
 </Project>

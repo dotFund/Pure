@@ -5,30 +5,25 @@ using System.Text;
 
 namespace Pure.IO.Json
 {
-    internal class JObject
+    public class JObject
     {
+        public static readonly JObject Null = null;
         private Dictionary<string, JObject> properties = new Dictionary<string, JObject>();
 
         public JObject this[string name]
         {
             get
             {
-                if (!properties.ContainsKey(name))
-                    return JNull.Value;
-                return properties[name];
+                properties.TryGetValue(name, out JObject value);
+                return value;
             }
             set
             {
-                if (properties.ContainsKey(name))
-                {
-                    properties[name] = value;
-                }
-                else
-                {
-                    properties.Add(name, value);
-                }
+                properties[name] = value;
             }
         }
+
+        public IReadOnlyDictionary<string, JObject> Properties => properties;
 
         public virtual bool AsBoolean()
         {
@@ -54,14 +49,14 @@ namespace Pure.IO.Json
             return AsEnum<T>(ignoreCase);
         }
 
-        public virtual decimal AsNumber()
+        public virtual double AsNumber()
         {
             throw new InvalidCastException();
         }
 
-        public decimal AsNumberOrDefault(decimal value = 0)
+        public double AsNumberOrDefault(double value = 0)
         {
-            if (!CanConvertTo(typeof(decimal)))
+            if (!CanConvertTo(typeof(double)))
                 return value;
             return AsNumber();
         }
@@ -88,7 +83,7 @@ namespace Pure.IO.Json
             return properties.ContainsKey(key);
         }
 
-        internal static JObject Parse(TextReader reader)
+        public static JObject Parse(TextReader reader)
         {
             SkipSpace(reader);
             char firstChar = (char)reader.Peek();
@@ -122,7 +117,7 @@ namespace Pure.IO.Json
                 string name = JString.Parse(reader).Value;
                 SkipSpace(reader);
                 if (reader.Read() != ':') throw new FormatException();
-                JObject value = JObject.Parse(reader);
+                JObject value = Parse(reader);
                 obj.properties.Add(name, value);
                 SkipSpace(reader);
             }
@@ -156,7 +151,7 @@ namespace Pure.IO.Json
 
         protected static void SkipSpace(TextReader reader)
         {
-            while (reader.Peek() == ' ' || reader.Peek() == '\r' || reader.Peek() == '\n')
+            while (reader.Peek() == ' ' || reader.Peek() == '\t' || reader.Peek() == '\r' || reader.Peek() == '\n')
             {
                 reader.Read();
             }
@@ -208,14 +203,14 @@ namespace Pure.IO.Json
             return new JBoolean(value);
         }
 
-        public static implicit operator JObject(decimal value)
+        public static implicit operator JObject(double value)
         {
             return new JNumber(value);
         }
 
         public static implicit operator JObject(string value)
         {
-            return new JString(value);
+            return value == null ? null : new JString(value);
         }
     }
 }

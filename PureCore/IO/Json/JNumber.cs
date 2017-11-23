@@ -1,14 +1,15 @@
 ﻿using System;
 using System.IO;
+using System.Reflection;
 using System.Text;
 
 namespace Pure.IO.Json
 {
-    internal class JNumber : JObject
+    public class JNumber : JObject
     {
-        public decimal Value { get; private set; }
+        public double Value { get; private set; }
 
-        public JNumber(decimal value = 0)
+        public JNumber(double value = 0)
         {
             this.Value = value;
         }
@@ -23,28 +24,29 @@ namespace Pure.IO.Json
         public override T AsEnum<T>(bool ignoreCase = false)
         {
             Type t = typeof(T);
-            if (!t.IsEnum)
+            TypeInfo ti = t.GetTypeInfo();
+            if (!ti.IsEnum)
                 throw new InvalidCastException();
-            if (t.GetEnumUnderlyingType() == typeof(byte))
+            if (ti.GetEnumUnderlyingType() == typeof(byte))
                 return (T)Enum.ToObject(t, (byte)Value);
-            if (t.GetEnumUnderlyingType() == typeof(int))
+            if (ti.GetEnumUnderlyingType() == typeof(int))
                 return (T)Enum.ToObject(t, (int)Value);
-            if (t.GetEnumUnderlyingType() == typeof(long))
+            if (ti.GetEnumUnderlyingType() == typeof(long))
                 return (T)Enum.ToObject(t, (long)Value);
-            if (t.GetEnumUnderlyingType() == typeof(sbyte))
+            if (ti.GetEnumUnderlyingType() == typeof(sbyte))
                 return (T)Enum.ToObject(t, (sbyte)Value);
-            if (t.GetEnumUnderlyingType() == typeof(short))
+            if (ti.GetEnumUnderlyingType() == typeof(short))
                 return (T)Enum.ToObject(t, (short)Value);
-            if (t.GetEnumUnderlyingType() == typeof(uint))
+            if (ti.GetEnumUnderlyingType() == typeof(uint))
                 return (T)Enum.ToObject(t, (uint)Value);
-            if (t.GetEnumUnderlyingType() == typeof(ulong))
+            if (ti.GetEnumUnderlyingType() == typeof(ulong))
                 return (T)Enum.ToObject(t, (ulong)Value);
-            if (t.GetEnumUnderlyingType() == typeof(ushort))
+            if (ti.GetEnumUnderlyingType() == typeof(ushort))
                 return (T)Enum.ToObject(t, (ushort)Value);
             throw new InvalidCastException();
         }
 
-        public override decimal AsNumber()
+        public override double AsNumber()
         {
             return Value;
         }
@@ -58,11 +60,12 @@ namespace Pure.IO.Json
         {
             if (type == typeof(bool))
                 return true;
-            if (type.IsEnum && Enum.IsDefined(type, Convert.ChangeType(Value, type.GetEnumUnderlyingType())))
-                return true;
-            if (type == typeof(decimal))
+            if (type == typeof(double))
                 return true;
             if (type == typeof(string))
+                return true;
+            TypeInfo ti = type.GetTypeInfo();
+            if (ti.IsEnum && Enum.IsDefined(type, Convert.ChangeType(Value, ti.GetEnumUnderlyingType())))
                 return true;
             return false;
         }
@@ -84,7 +87,7 @@ namespace Pure.IO.Json
                     break;
                 }
             }
-            return new JNumber(decimal.Parse(sb.ToString()));
+            return new JNumber(double.Parse(sb.ToString()));
         }
 
         public override string ToString()

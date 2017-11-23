@@ -1,0 +1,32 @@
+<Project Sdk="Microsoft.NET.Sdk" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Copyright>2017-2018 The Pure Project</Copyright>
+    <AssemblyTitle>Neo.VM</AssemblyTitle>
+    <Description>Pure.VM</Description>
+    <Version>1.0.1</Version>
+    <Authors>dotFund</Authors>
+    <TargetFrameworks>netstandard1.6;net461</TargetFrameworks>
+    <AssemblyName>Pure.VM</AssemblyName>
+    <PackageId>Pure.VM</PackageId>
+    <PackageTags>Pure;Blockchain;Smart Contract;VM</PackageTags>
+    <PackageProjectUrl>https://github.com/dotFund/Pure</PackageProjectUrl>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/dotFund/Pure.git</RepositoryUrl>
+    <NetStandardImplicitPackageVersion Condition=" '$(TargetFramework)' == 'netstandard1.6' ">1.6.0</NetStandardImplicitPackageVersion>
+    <RootNamespace>Pure.VM</RootNamespace>
+    <Company>The Pure Project</Company>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|netstandard1.6|AnyCPU'">
+    <DefineConstants>RELEASE;NETSTANDARD1_6</DefineConstants>
+    <DebugType>none</DebugType>
+    <DebugSymbols>False</DebugSymbols>
+  </PropertyGroup>
+
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net461' ">
+    <Reference Include="System.Numerics" />
+    <Reference Include="System" />
+    <Reference Include="Microsoft.CSharp" />
+  </ItemGroup>
+
+</Project>

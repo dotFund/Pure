@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Globalization;
 using System.IO;
+using System.Reflection;
 using System.Text;
-using System.Web;
+using System.Text.Encodings.Web;
 
 namespace Pure.IO.Json
 {
-    internal class JString : JObject
+    public class JString : JObject
     {
         public string Value { get; private set; }
 
@@ -45,11 +46,11 @@ namespace Pure.IO.Json
             }
         }
 
-        public override decimal AsNumber()
+        public override double AsNumber()
         {
             try
             {
-                return decimal.Parse(Value);
+                return double.Parse(Value);
             }
             catch
             {
@@ -66,9 +67,9 @@ namespace Pure.IO.Json
         {
             if (type == typeof(bool))
                 return true;
-            if (type.IsEnum && Enum.IsDefined(type, Value))
+            if (type.GetTypeInfo().IsEnum && Enum.IsDefined(type, Value))
                 return true;
-            if (type == typeof(decimal))
+            if (type == typeof(double))
                 return true;
             if (type == typeof(string))
                 return true;
@@ -103,7 +104,7 @@ namespace Pure.IO.Json
 
         public override string ToString()
         {
-            return HttpUtility.JavaScriptStringEncode(Value, true);
+            return $"\"{JavaScriptEncoder.Default.Encode(Value)}\"";
         }
     }
 }

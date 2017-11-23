@@ -1,11 +1,13 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
+using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Text;
 
 namespace Pure.IO
 {
-    internal static class Helper
+    public static class Helper
     {
         public static T AsSerializable<T>(this byte[] value) where T : ISerializable, new()
         {
@@ -16,14 +18,62 @@ namespace Pure.IO
             }
         }
 
-        public static byte[][] ReadBytesArray(this BinaryReader reader)
+        public static ISerializable AsSerializable(this byte[] value, Type type)
         {
-            byte[][] array = new byte[reader.ReadVarInt()][];
-            for (int i = 0; i < array.Length; i++)
+            if (!typeof(ISerializable).GetTypeInfo().IsAssignableFrom(type))
+                throw new InvalidCastException();
+            ISerializable serializable = (ISerializable)Activator.CreateInstance(type);
+            using (MemoryStream ms = new MemoryStream(value, false))
+            using (BinaryReader reader = new BinaryReader(ms, Encoding.UTF8))
             {
-                array[i] = reader.ReadBytes((int)reader.ReadVarInt());
+                serializable.Deserialize(reader);
             }
-            return array;
+            return serializable;
+        }
+
+        internal static int GetVarSize(int value)
+        {
+            if (value < 0xFD)
+                return sizeof(byte);
+            else if (value <= 0xFFFF)
+                return sizeof(byte) + sizeof(ushort);
+            else
+                return sizeof(byte) + sizeof(uint);
+        }
+
+        internal static int GetVarSize<T>(this T[] value)
+        {
+            int value_size;
+            Type t = typeof(T);
+            if (typeof(ISerializable).IsAssignableFrom(t))
+            {
+                value_size = value.OfType<ISerializable>().Sum(p => p.Size);
+            }
+            else if (t.GetTypeInfo().IsEnum)
+            {
+                int element_size;
+                Type u = t.GetTypeInfo().GetEnumUnderlyingType();
+                if (u == typeof(sbyte) || u == typeof(byte))
+                    element_size = 1;
+                else if (u == typeof(short) || u == typeof(ushort))
+                    element_size = 2;
+                else if (u == typeof(int) || u == typeof(uint))
+                    element_size = 4;
+                else //if (u == typeof(long) || u == typeof(ulong))
+                    element_size = 8;
+                value_size = value.Length * element_size;
+            }
+            else
+            {
+                value_size = value.Length * Marshal.SizeOf<T>();
+            }
+            return GetVarSize(value.Length) + value_size;
+        }
+
+        internal static int GetVarSize(this string value)
+        {
+            int size = Encoding.UTF8.GetByteCount(value);
+            return GetVarSize(size) + size;
         }
 
         public static string ReadFixedString(this BinaryReader reader, int length)
@@ -39,9 +89,9 @@ namespace Pure.IO
             return obj;
         }
 
-        public static T[] ReadSerializableArray<T>(this BinaryReader reader) where T : ISerializable, new()
+        public static T[] ReadSerializableArray<T>(this BinaryReader reader, int max = 0x10000000) where T : ISerializable, new()
         {
-            T[] array = new T[reader.ReadVarInt()];
+            T[] array = new T[reader.ReadVarInt((ulong)max)];
             for (int i = 0; i < array.Length; i++)
             {
                 array[i] = new T();
@@ -50,22 +100,30 @@ namespace Pure.IO
             return array;
         }
 
-        public static UInt64 ReadVarInt(this BinaryReader reader)
+        public static byte[] ReadVarBytes(this BinaryReader reader, int max = 0X7fffffc7)
         {
-            byte value = reader.ReadByte();
-            if (value == 0xFD)
-                return reader.ReadUInt16();
-            else if (value == 0xFE)
-                return reader.ReadUInt32();
-            else if (value == 0xFF)
-                return reader.ReadUInt64();
-            else
-                return value;
+            return reader.ReadBytes((int)reader.ReadVarInt((ulong)max));
         }
 
-        public static string ReadVarString(this BinaryReader reader)
+        public static ulong ReadVarInt(this BinaryReader reader, ulong max = ulong.MaxValue)
         {
-            return Encoding.UTF8.GetString(reader.ReadBytes((int)reader.ReadVarInt()));
+            byte fb = reader.ReadByte();
+            ulong value;
+            if (fb == 0xFD)
+                value = reader.ReadUInt16();
+            else if (fb == 0xFE)
+                value = reader.ReadUInt32();
+            else if (fb == 0xFF)
+                value = reader.ReadUInt64();
+            else
+                value = fb;
+            if (value > max) throw new FormatException();
+            return value;
+        }
+
+        public static string ReadVarString(this BinaryReader reader, int max = 0X7fffffc7)
+        {
+            return Encoding.UTF8.GetString(reader.ReadVarBytes(max));
         }
 
         public static byte[] ToArray(this ISerializable value)
@@ -74,10 +132,10 @@ namespace Pure.IO
             using (BinaryWriter writer = new BinaryWriter(ms, Encoding.UTF8))
             {
                 value.Serialize(writer);
+                writer.Flush();
                 return ms.ToArray();
             }
         }
-
 
         public static void Write(this BinaryWriter writer, ISerializable value)
         {
@@ -93,25 +151,24 @@ namespace Pure.IO
             }
         }
 
-        public static void Write(this BinaryWriter writer, byte[][] value)
-        {
-            writer.WriteVarInt(value.Length);
-            for (int i = 0; i < value.Length; i++)
-            {
-                writer.WriteVarInt(value[i].Length);
-                writer.Write(value[i]);
-            }
-        }
-
         public static void WriteFixedString(this BinaryWriter writer, string value, int length)
         {
             if (value == null)
-                throw new ArgumentNullException();
-            if (value.Length < length)
-                value = value.PadRight(length, '\0');
-            if (value.Length != length)
+                throw new ArgumentNullException(nameof(value));
+            if (value.Length > length)
                 throw new ArgumentException();
-            writer.Write(Encoding.UTF8.GetBytes(value));
+            byte[] bytes = Encoding.UTF8.GetBytes(value);
+            if (bytes.Length > length)
+                throw new ArgumentException();
+            writer.Write(bytes);
+            if (bytes.Length < length)
+                writer.Write(new byte[length - bytes.Length]);
+        }
+
+        public static void WriteVarBytes(this BinaryWriter writer, byte[] value)
+        {
+            writer.WriteVarInt(value.Length);
+            writer.Write(value);
         }
 
         public static void WriteVarInt(this BinaryWriter writer, long value)
@@ -125,12 +182,12 @@ namespace Pure.IO
             else if (value <= 0xFFFF)
             {
                 writer.Write((byte)0xFD);
-                writer.Write((UInt16)value);
+                writer.Write((ushort)value);
             }
             else if (value <= 0xFFFFFFFF)
             {
                 writer.Write((byte)0xFE);
-                writer.Write((UInt32)value);
+                writer.Write((uint)value);
             }
             else
             {
@@ -141,9 +198,7 @@ namespace Pure.IO
 
         public static void WriteVarString(this BinaryWriter writer, string value)
         {
-            byte[] data = Encoding.UTF8.GetBytes(value);
-            writer.WriteVarInt(data.Length);
-            writer.Write(data);
+            writer.WriteVarBytes(Encoding.UTF8.GetBytes(value));
         }
     }
 }

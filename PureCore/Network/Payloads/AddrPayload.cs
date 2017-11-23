@@ -7,6 +7,8 @@ namespace Pure.Network.Payloads
     {
         public NetworkAddressWithTime[] AddressList;
 
+        public int Size => AddressList.GetVarSize();
+
         public static AddrPayload Create(params NetworkAddressWithTime[] addresses)
         {
             return new AddrPayload
@@ -17,7 +19,7 @@ namespace Pure.Network.Payloads
 
         void ISerializable.Deserialize(BinaryReader reader)
         {
-            this.AddressList = reader.ReadSerializableArray<NetworkAddressWithTime>();
+            this.AddressList = reader.ReadSerializableArray<NetworkAddressWithTime>(200);
         }
 
         void ISerializable.Serialize(BinaryWriter writer)

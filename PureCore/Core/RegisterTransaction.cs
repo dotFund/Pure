@@ -1,4 +1,8 @@
-﻿using Pure.IO;
+﻿using Pure.Cryptography.ECC;
+using Pure.IO;
+using Pure.IO.Json;
+using Pure.SmartContract;
+using Pure.Wallets;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -6,57 +10,130 @@ using System.Linq;
 
 namespace Pure.Core
 {
+    [Obsolete]
     public class RegisterTransaction : Transaction
     {
-        public RegisterType RegisterType;
-        public string RegisterName;
         /// <summary>
-        /// 发行总量，共有3中模式：
-        /// 1. 限量模式：当Amount为正数时，表示当前资产的最大总量为Amount，且不可修改（股权在未来可能会支持扩股或增发，会考虑需要公司签名或一定比例的股东签名认可）。
-        /// 2. 信贷模式：当Amount等于0时，表示当前资产的发行方式为信贷方式。通常网关会采用这种模式，当用户充值时，产生正负两枚货币，负值表示负债，不可转让；当用户提现时，正负合并归零。无论何时，该资产在链上的总和为0。
-        /// 3. 不限量模式：当Amount等于-1时，表示当前资产可以由创建者无限量发行。这种模式的自由度最大，但是公信力最低，不建议使用。
-        /// 在使用过程中，根据资产类型的不同，能够使用的总量模式也不同，具体规则如下：
-        /// 1. 对于股权，只能使用限量模式；
-        /// 2. 对于货币，只能使用信贷模式；
-        /// 3. 对于点券，可以使用任意模式；
+        /// 资产类别
         /// </summary>
-        public Int64 Amount;
-        public UInt160 Issuer;
+        public AssetType AssetType;
+        /// <summary>
+        /// 资产名称
+        /// </summary>
+        public string Name;
+        /// <summary>
+        /// 发行总量，共有2种模式：
+        /// 1. 限量模式：当Amount为正数时，表示当前资产的最大总量为Amount，且不可修改（股权在未来可能会支持扩股或增发，会考虑需要公司签名或一定比例的股东签名认可）。
+        /// 2. 不限量模式：当Amount等于-1时，表示当前资产可以由创建者无限量发行。这种模式的自由度最大，但是公信力最低，不建议使用。
+        /// </summary>
+        public Fixed8 Amount;
+        public byte Precision;
+        /// <summary>
+        /// 发行者的公钥
+        /// </summary>
+        public ECPoint Owner;
+        /// <summary>
+        /// 资产管理员的合约散列值
+        /// </summary>
         public UInt160 Admin;
+
+        public override int Size => base.Size + sizeof(AssetType) + Name.GetVarSize() + Amount.Size + sizeof(byte) + Owner.Size + Admin.Size;
+
+        /// <summary>
+        /// 系统费用
+        /// </summary>
+        public override Fixed8 SystemFee
+        {
+            get
+            {
+                if (AssetType == AssetType.GoverningToken || AssetType == AssetType.UtilityToken)
+                    return Fixed8.Zero;
+                return base.SystemFee;
+            }
+        }
 
         public RegisterTransaction()
             : base(TransactionType.RegisterTransaction)
         {
         }
 
+        /// <summary>
+        /// 反序列化交易中额外的数据
+        /// </summary>
+        /// <param name="reader">数据来源</param>
         protected override void DeserializeExclusiveData(BinaryReader reader)
         {
-            this.RegisterType = (RegisterType)reader.ReadByte();
-            this.RegisterName = reader.ReadVarString();
-            this.Amount = reader.ReadInt64();
-            if (Amount < -1)
+            if (Version != 0) throw new FormatException();
+            AssetType = (AssetType)reader.ReadByte();
+            Name = reader.ReadVarString(1024);
+            Amount = reader.ReadSerializable<Fixed8>();
+            Precision = reader.ReadByte();
+            Owner = ECPoint.DeserializeFrom(reader, ECCurve.Secp256r1);
+            if (Owner.IsInfinity && AssetType != AssetType.GoverningToken && AssetType != AssetType.UtilityToken)
                 throw new FormatException();
-            this.Issuer = reader.ReadSerializable<UInt160>();
-            this.Admin = reader.ReadSerializable<UInt160>();
+            Admin = reader.ReadSerializable<UInt160>();
         }
 
+        /// <summary>
+        /// 获取需要校验的脚本Hash值
+        /// </summary>
+        /// <returns>返回需要校验的脚本Hash值</returns>
         public override UInt160[] GetScriptHashesForVerifying()
         {
-            IEnumerable<UInt160> hashes = base.GetScriptHashesForVerifying().Union(new UInt160[] { Issuer, Admin });
-            if (RegisterType.HasFlag(RegisterType.Share))
-            {
-                hashes = hashes.Union(Outputs.Select(p => p.ScriptHash));
-            }
-            return hashes.OrderBy(p => p).ToArray();
+            UInt160 owner = Contract.CreateSignatureRedeemScript(Owner).ToScriptHash();
+            return base.GetScriptHashesForVerifying().Union(new[] { owner }).OrderBy(p => p).ToArray();
         }
 
+        protected override void OnDeserialized()
+        {
+            base.OnDeserialized();
+            if (AssetType == AssetType.GoverningToken && !Hash.Equals(Blockchain.GoverningToken.Hash))
+                throw new FormatException();
+            if (AssetType == AssetType.UtilityToken && !Hash.Equals(Blockchain.UtilityToken.Hash))
+                throw new FormatException();
+        }
+
+        /// <summary>
+        /// 序列化交易中额外的数据
+        /// </summary>
+        /// <param name="writer">存放序列化后的结果</param>
         protected override void SerializeExclusiveData(BinaryWriter writer)
         {
-            writer.Write((byte)RegisterType);
-            writer.WriteVarString(RegisterName);
+            writer.Write((byte)AssetType);
+            writer.WriteVarString(Name);
             writer.Write(Amount);
-            writer.Write(Issuer);
+            writer.Write(Precision);
+            writer.Write(Owner);
             writer.Write(Admin);
+        }
+
+        /// <summary>
+        /// 变成json对象
+        /// </summary>
+        /// <returns>返回json对象</returns>
+        public override JObject ToJson()
+        {
+            JObject json = base.ToJson();
+            json["asset"] = new JObject();
+            json["asset"]["type"] = AssetType;
+            try
+            {
+                json["asset"]["name"] = Name == "" ? null : JObject.Parse(Name);
+            }
+            catch (FormatException)
+            {
+                json["asset"]["name"] = Name;
+            }
+            json["asset"]["amount"] = Amount.ToString();
+            json["asset"]["precision"] = Precision;
+            json["asset"]["owner"] = Owner.ToString();
+            json["asset"]["admin"] = Wallet.ToAddress(Admin);
+            return json;
+        }
+
+        public override bool Verify(IEnumerable<Transaction> mempool)
+        {
+            return false;
         }
     }
 }

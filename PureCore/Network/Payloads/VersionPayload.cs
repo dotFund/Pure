@@ -1,4 +1,5 @@
-﻿using Pure.IO;
+﻿using Pure.Core;
+using Pure.IO;
 using System;
 using System.IO;
 
@@ -6,23 +7,29 @@ namespace Pure.Network.Payloads
 {
     public class VersionPayload : ISerializable
     {
-        public UInt32 Version;
-        public UInt64 Services;
-        public UInt32 Timestamp;
-        public UInt16 Port;
+        public uint Version;
+        public ulong Services;
+        public uint Timestamp;
+        public ushort Port;
+        public uint Nonce;
         public string UserAgent;
-        public UInt32 StartHeight;
+        public uint StartHeight;
+        public bool Relay;
 
-        public static VersionPayload Create(int port, string userAgent, UInt32 start_height)
+        public int Size => sizeof(uint) + sizeof(ulong) + sizeof(uint) + sizeof(ushort) + sizeof(uint) + UserAgent.GetVarSize() + sizeof(uint) + sizeof(bool);
+
+        public static VersionPayload Create(int port, uint nonce, string userAgent)
         {
             return new VersionPayload
             {
-                Version = LocalNode.PROTOCOL_VERSION,
-                Services = 1,
+                Version = LocalNode.ProtocolVersion,
+                Services = NetworkAddressWithTime.NODE_NETWORK,
                 Timestamp = DateTime.Now.ToTimestamp(),
-                Port = (UInt16)port,
+                Port = (ushort)port,
+                Nonce = nonce,
                 UserAgent = userAgent,
-                StartHeight = start_height
+                StartHeight = Blockchain.Default?.Height ?? 0,
+                Relay = true
             };
         }
 
@@ -32,8 +39,10 @@ namespace Pure.Network.Payloads
             Services = reader.ReadUInt64();
             Timestamp = reader.ReadUInt32();
             Port = reader.ReadUInt16();
-            UserAgent = reader.ReadVarString();
+            Nonce = reader.ReadUInt32();
+            UserAgent = reader.ReadVarString(1024);
             StartHeight = reader.ReadUInt32();
+            Relay = reader.ReadBoolean();
         }
 
         void ISerializable.Serialize(BinaryWriter writer)
@@ -42,8 +51,10 @@ namespace Pure.Network.Payloads
             writer.Write(Services);
             writer.Write(Timestamp);
             writer.Write(Port);
+            writer.Write(Nonce);
             writer.WriteVarString(UserAgent);
             writer.Write(StartHeight);
+            writer.Write(Relay);
         }
     }
 }

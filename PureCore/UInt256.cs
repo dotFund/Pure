@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Globalization;
-using System.IO;
 using System.Linq;
 
 namespace Pure
 {
-    public class UInt256 : UIntBase, IComparable<UInt256>
+    public class UInt256 : UIntBase, IComparable<UInt256>, IEquatable<UInt256>
     {
         public static readonly UInt256 Zero = new UInt256();
 
@@ -33,14 +32,19 @@ namespace Pure
             return 0;
         }
 
-        public static UInt256 Parse(string s)
+        bool IEquatable<UInt256>.Equals(UInt256 other)
+        {
+            return Equals(other);
+        }
+
+        public static new UInt256 Parse(string s)
         {
             if (s == null)
                 throw new ArgumentNullException();
             if (s.StartsWith("0x"))
                 s = s.Substring(2);
             if (s.Length != 64)
-                throw new FormatException(string.Format("字符串\"{0}\"无法识别为正确的UInt256。", s));
+                throw new FormatException();
             return new UInt256(s.HexToBytes().Reverse().ToArray());
         }
 
