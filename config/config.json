@@ -1,0 +1,16 @@
+﻿{
+  "ApplicationConfiguration": {
+    "DataDirectoryPath": "Chain",
+    "CertCachePath": "Certs",
+    "NodePort": 10909,
+    "WsPort": 10903,
+    "UriPrefix": [ "http://*:10900" ],
+    "SslCert": "",
+    "SslCertPassword": "",
+    "Urls": {
+      "AddressUrl": "",
+      "AssetUrl": "",
+      "TransactionUrl": ""
+    }
+  }
+}

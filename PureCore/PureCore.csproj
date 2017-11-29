@@ -39,7 +39,6 @@
     <PackageReference Include="Microsoft.AspNetCore.Server.Kestrel" Version="1.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.Server.Kestrel.Https" Version="1.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.WebSockets" Version="1.0.1" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="1.0.3" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="1.0.2" />
     <PackageReference Include="System.Net.Sockets" Version="4.3.0" />
     <PackageReference Include="System.Security.SecureString" Version="4.0.0" />
@@ -52,6 +51,7 @@
     <PackageReference Include="System.Net.NetworkInformation" Version="4.1.0" />
     <PackageReference Include="System.Net.Requests" Version="4.0.11" />
     <PackageReference Include="System.Xml.XPath.XmlDocument" Version="4.0.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="1.0.3" />
   </ItemGroup>
 
   <ItemGroup Condition=" '$(TargetFramework)' == 'net461' ">
@@ -60,9 +60,13 @@
     <Reference Include="System.Xml" />
     <Reference Include="System" />
     <Reference Include="Microsoft.CSharp" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="2.0.0" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'net461'">
+    <PackageReference Include="Microsoft.Data.Sqlite.Core">
+      <Version>2.0.0</Version>
+    </PackageReference>
     <PackageReference Include="Replicon.Cryptography.SCrypt">
       <Version>1.1.6.13</Version>
     </PackageReference>
