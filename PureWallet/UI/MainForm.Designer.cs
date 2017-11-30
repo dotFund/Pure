@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.ListViewGroup listViewGroup1 = new System.Windows.Forms.ListViewGroup("unchecked", System.Windows.Forms.HorizontalAlignment.Left);
-            System.Windows.Forms.ListViewGroup listViewGroup2 = new System.Windows.Forms.ListViewGroup("checked", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewGroup listViewGroup5 = new System.Windows.Forms.ListViewGroup("unchecked", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewGroup listViewGroup6 = new System.Windows.Forms.ListViewGroup("checked", System.Windows.Forms.HorizontalAlignment.Left);
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.pureToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.quitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -185,6 +185,7 @@
             this.openWalletToolStripMenuItem.Name = "openWalletToolStripMenuItem";
             this.openWalletToolStripMenuItem.Size = new System.Drawing.Size(199, 26);
             this.openWalletToolStripMenuItem.Text = "Open Wallet";
+            this.openWalletToolStripMenuItem.Click += new System.EventHandler(this.openWalletToolStripMenuItem_Click);
             // 
             // changePasswordToolStripMenuItem
             // 
@@ -193,18 +194,21 @@
             // 
             // changePasswordToolStripMenuItem1
             // 
+            this.changePasswordToolStripMenuItem1.Enabled = false;
             this.changePasswordToolStripMenuItem1.Name = "changePasswordToolStripMenuItem1";
             this.changePasswordToolStripMenuItem1.Size = new System.Drawing.Size(199, 26);
             this.changePasswordToolStripMenuItem1.Text = "Change Password";
             // 
             // rebuildIndexToolStripMenuItem
             // 
+            this.rebuildIndexToolStripMenuItem.Enabled = false;
             this.rebuildIndexToolStripMenuItem.Name = "rebuildIndexToolStripMenuItem";
             this.rebuildIndexToolStripMenuItem.Size = new System.Drawing.Size(199, 26);
             this.rebuildIndexToolStripMenuItem.Text = "Rebuild Index";
             // 
             // restoreAccountToolStripMenuItem
             // 
+            this.restoreAccountToolStripMenuItem.Enabled = false;
             this.restoreAccountToolStripMenuItem.Name = "restoreAccountToolStripMenuItem";
             this.restoreAccountToolStripMenuItem.Size = new System.Drawing.Size(199, 26);
             this.restoreAccountToolStripMenuItem.Text = "Restore Account";
@@ -820,13 +824,13 @@
             this.columnHeader2,
             this.columnHeader3,
             this.columnHeader4});
-            listViewGroup1.Header = "unchecked";
-            listViewGroup1.Name = "unchecked";
-            listViewGroup2.Header = "checked";
-            listViewGroup2.Name = "checked";
+            listViewGroup5.Header = "unchecked";
+            listViewGroup5.Name = "unchecked";
+            listViewGroup6.Header = "checked";
+            listViewGroup6.Name = "checked";
             this.lst_asset.Groups.AddRange(new System.Windows.Forms.ListViewGroup[] {
-            listViewGroup1,
-            listViewGroup2});
+            listViewGroup5,
+            listViewGroup6});
             this.lst_asset.Location = new System.Drawing.Point(24, 451);
             this.lst_asset.Name = "lst_asset";
             this.lst_asset.Size = new System.Drawing.Size(587, 194);

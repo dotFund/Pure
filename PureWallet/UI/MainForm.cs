@@ -11,6 +11,7 @@ using System.Xml.Linq;
 using System.Reflection;
 using System.IO;
 using System.IO.Compression;
+using System.Security.Cryptography;
 
 using Pure.Core;
 using Pure.Implementations.Blockchains.LevelDB;
@@ -533,6 +534,28 @@ namespace Pure.UI
         private void lst_addr_DrawSubItem(object sender, DrawListViewSubItemEventArgs e)
         {
 
+        }
+
+        private void openWalletToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            using (OpenWalletDialog dialog = new OpenWalletDialog())
+            {
+                if (dialog.ShowDialog() != DialogResult.OK) return;
+                UserWallet wallet;
+                try
+                {
+                    wallet = UserWallet.Open(dialog.WalletPath, dialog.Password);
+                }
+                catch (CryptographicException)
+                {
+                    MessageBox.Show(Strings.PasswordIncorrect);
+                    return;
+                }
+                //if (dialog.RepairMode) wallet.Rebuild();
+                ChangeWallet(wallet);
+                Settings.Default.LastWalletPath = dialog.WalletPath;
+                Settings.Default.Save();
+            }
         }
     }
 }

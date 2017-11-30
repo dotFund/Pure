@@ -63,7 +63,8 @@ namespace Pure.UI
             // DefaultExt is only used when "All files" is selected from 
             // the filter box and no extension is specified by the user.
             saveFileDialog1.DefaultExt = "db3";
-            saveFileDialog1.Filter = "Text files (*.db3)|*.db3|All files (*.*)|*.*";
+            saveFileDialog1.Filter = "db3 files (*.db3)|*.db3|All files (*.*)|*.*";
+
             if (saveFileDialog1.ShowDialog() == DialogResult.OK)
             {
                 textBox1.Text = saveFileDialog1.FileName;
