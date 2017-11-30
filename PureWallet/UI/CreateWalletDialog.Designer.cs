@@ -145,6 +145,7 @@
             this.Controls.Add(this.label1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Name = "CreateWalletDialog";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "CreateWalletDialog";
             this.ResumeLayout(false);
             this.PerformLayout();

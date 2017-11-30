@@ -135,6 +135,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Cryptography\CertificateQueryResult.cs" />
+    <Compile Include="Cryptography\CertificateQueryResultType.cs" />
+    <Compile Include="Cryptography\CertificateQueryService.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Strings.Designer.cs">

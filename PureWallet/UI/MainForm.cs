@@ -18,6 +18,8 @@ using Pure.IO;
 using Pure.VM;
 using Pure.Implementations.Wallets.EntityFramework;
 using Pure.Properties;
+using Pure.Wallets;
+using Pure.Cryptography;
 
 namespace Pure.UI
 {
@@ -25,6 +27,7 @@ namespace Pure.UI
     {
         private static readonly UInt160 RecycleScriptHash = new[] { (byte)OpCode.PUSHT }.ToScriptHash();
         private bool balance_changed = false;
+        private bool check_nep5_balance = false;
         private DateTime persistence_time = DateTime.MinValue;
 
         public MainForm(XDocument xdoc = null)
@@ -92,6 +95,149 @@ namespace Pure.UI
             {
                 this.tss_pgs_wait_block.Value = persistence_span.Seconds;
                 this.tss_pgs_wait_block.Style = ProgressBarStyle.Blocks;
+            }
+
+            if (Program.CurrentWallet != null)
+            {
+                if (Program.CurrentWallet.WalletHeight <= Blockchain.Default.Height + 1)
+                {
+                    if (balance_changed)
+                    {
+                        IEnumerable<Coin> coins = Program.CurrentWallet?.GetCoins().Where(p => !p.State.HasFlag(CoinState.Spent)) ?? Enumerable.Empty<Coin>();
+                        Fixed8 bonus_available = Blockchain.CalculateBonus(Program.CurrentWallet.GetUnclaimedCoins().Select(p => p.Reference));
+                        Fixed8 bonus_unavailable = Blockchain.CalculateBonus(coins.Where(p => p.State.HasFlag(CoinState.Confirmed) && p.Output.AssetId.Equals(Blockchain.GoverningToken.Hash)).Select(p => p.Reference), Blockchain.Default.Height + 1);
+                        Fixed8 bonus = bonus_available + bonus_unavailable;
+                        var assets = coins.GroupBy(p => p.Output.AssetId, (k, g) => new
+                        {
+                            Asset = Blockchain.Default.GetAssetState(k),
+                            Value = g.Sum(p => p.Output.Value),
+                            Claim = k.Equals(Blockchain.UtilityToken.Hash) ? bonus : Fixed8.Zero
+                        }).ToDictionary(p => p.Asset.AssetId);
+                        if (bonus != Fixed8.Zero && !assets.ContainsKey(Blockchain.UtilityToken.Hash))
+                        {
+                            assets[Blockchain.UtilityToken.Hash] = new
+                            {
+                                Asset = Blockchain.Default.GetAssetState(Blockchain.UtilityToken.Hash),
+                                Value = Fixed8.Zero,
+                                Claim = bonus
+                            };
+                        }
+                        var balance_ans = coins.Where(p => p.Output.AssetId.Equals(Blockchain.GoverningToken.Hash)).GroupBy(p => p.Output.ScriptHash).ToDictionary(p => p.Key, p => p.Sum(i => i.Output.Value));
+                        var balance_anc = coins.Where(p => p.Output.AssetId.Equals(Blockchain.UtilityToken.Hash)).GroupBy(p => p.Output.ScriptHash).ToDictionary(p => p.Key, p => p.Sum(i => i.Output.Value));
+                        foreach (ListViewItem item in lst_addr.Items)
+                        {
+                            UInt160 script_hash = Wallet.ToScriptHash(item.Name);
+                            Fixed8 ans = balance_ans.ContainsKey(script_hash) ? balance_ans[script_hash] : Fixed8.Zero;
+                            Fixed8 anc = balance_anc.ContainsKey(script_hash) ? balance_anc[script_hash] : Fixed8.Zero;
+                            item.SubItems["ans"].Text = ans.ToString();
+                            item.SubItems["anc"].Text = anc.ToString();
+                        }
+
+                        foreach (AssetState asset in lst_asset.Items.OfType<ListViewItem>().Select(p => p.Tag as AssetState).Where(p => p != null).ToArray())
+                        {
+                            if (!assets.ContainsKey(asset.AssetId))
+                            {
+                                lst_asset.Items.RemoveByKey(asset.AssetId.ToString());
+                            }
+                        }
+                        foreach (var asset in assets.Values)
+                        {
+                            string value_text = asset.Value.ToString() + (asset.Asset.AssetId.Equals(Blockchain.UtilityToken.Hash) ? $"+({asset.Claim})" : "");
+                            if (lst_asset.Items.ContainsKey(asset.Asset.AssetId.ToString()))
+                            {
+                                lst_asset.Items[asset.Asset.AssetId.ToString()].SubItems["value"].Text = value_text;
+                            }
+                            else
+                            {
+                                string asset_name = asset.Asset.AssetType == AssetType.GoverningToken ? "NEO" :
+                                                    asset.Asset.AssetType == AssetType.UtilityToken ? "NeoGas" :
+                                                    asset.Asset.GetName();
+                                lst_asset.Items.Add(new ListViewItem(new[]
+                                {
+                                    new ListViewItem.ListViewSubItem
+                                    {
+                                        Name = "name",
+                                        Text = asset_name
+                                    },
+                                    new ListViewItem.ListViewSubItem
+                                    {
+                                        Name = "type",
+                                        Text = asset.Asset.AssetType.ToString()
+                                    },
+                                    new ListViewItem.ListViewSubItem
+                                    {
+                                        Name = "value",
+                                        Text = value_text
+                                    },
+                                    new ListViewItem.ListViewSubItem
+                                    {
+                                        ForeColor = Color.Gray,
+                                        Name = "issuer",
+                                        Text = $"{Strings.UnknownIssuer}[{asset.Asset.Owner}]"
+                                    }
+                                }, -1, lst_asset.Groups["unchecked"])
+                                {
+                                    Name = asset.Asset.AssetId.ToString(),
+                                    Tag = asset.Asset,
+                                    UseItemStyleForSubItems = false
+                                });
+                            }
+                        }
+                        balance_changed = false;
+                    }
+
+                    foreach (ListViewItem item in lst_asset.Groups["unchecked"].Items.OfType<ListViewItem>().ToArray())
+                    {
+                        ListViewItem.ListViewSubItem subitem = item.SubItems["issuer"];
+                        AssetState asset = (AssetState)item.Tag;
+                        CertificateQueryResult result;
+                        if (asset.AssetType == AssetType.GoverningToken || asset.AssetType == AssetType.UtilityToken)
+                        {
+                            result = new CertificateQueryResult { Type = CertificateQueryResultType.System };
+                        }
+                        else
+                        {
+                            result = CertificateQueryService.Query(asset.Owner);
+                        }
+                        using (result)
+                        {
+                            subitem.Tag = result.Type;
+                            switch (result.Type)
+                            {
+                                case CertificateQueryResultType.Querying:
+                                case CertificateQueryResultType.QueryFailed:
+                                    break;
+                                case CertificateQueryResultType.System:
+                                    subitem.ForeColor = Color.Green;
+                                    subitem.Text = Strings.SystemIssuer;
+                                    break;
+                                case CertificateQueryResultType.Invalid:
+                                    subitem.ForeColor = Color.Red;
+                                    subitem.Text = $"[{Strings.InvalidCertificate}][{asset.Owner}]";
+                                    break;
+                                case CertificateQueryResultType.Expired:
+                                    subitem.ForeColor = Color.Yellow;
+                                    subitem.Text = $"[{Strings.ExpiredCertificate}]{result.Certificate.Subject}[{asset.Owner}]";
+                                    break;
+                                case CertificateQueryResultType.Good:
+                                    subitem.ForeColor = Color.Black;
+                                    subitem.Text = $"{result.Certificate.Subject}[{asset.Owner}]";
+                                    break;
+                            }
+                            switch (result.Type)
+                            {
+                                case CertificateQueryResultType.System:
+                                case CertificateQueryResultType.Missing:
+                                case CertificateQueryResultType.Invalid:
+                                case CertificateQueryResultType.Expired:
+                                case CertificateQueryResultType.Good:
+                                    item.Group = lst_asset.Groups["checked"];
+                                    break;
+                            }
+                        }
+                    }
+                }
+
             }
         }
 
@@ -172,7 +318,7 @@ namespace Pure.UI
                 Program.CurrentWallet.Dispose();
             }
             Program.CurrentWallet = wallet;
-            dgv_transaction_history.DataSource = null;
+            lst_transaction.Items.Clear();
             if (Program.CurrentWallet != null)
             {
                 CurrentWallet_TransactionsChanged(null, Program.CurrentWallet.LoadTransactions());
@@ -197,7 +343,7 @@ namespace Pure.UI
             {
                 foreach (UInt160 scriptHash in Program.CurrentWallet.GetAddresses().ToArray())
                 {
-                    Contract contract = Program.CurrentWallet.GetContract(scriptHash);
+                    VerificationContract contract = Program.CurrentWallet.GetContract(scriptHash);
                     if (contract == null)
                         AddAddressToListView(scriptHash);
                     else
@@ -206,6 +352,72 @@ namespace Pure.UI
             }
             balance_changed = true;
             
+        }
+
+        private void AddAddressToListView(UInt160 scriptHash, bool selected = false)
+        {
+            string address = Wallet.ToAddress(scriptHash);
+            ListViewItem item = lst_addr.Items[address];
+            if (item == null)
+            {
+                ListViewGroup group = lst_addr.Groups["watchOnlyGroup"];
+                item = lst_addr.Items.Add(new ListViewItem(new[]
+                {
+                    new ListViewItem.ListViewSubItem
+                    {
+                        Name = "address",
+                        Text = address
+                    },
+                    new ListViewItem.ListViewSubItem
+                    {
+                        Name = "ans"
+                    },
+                    new ListViewItem.ListViewSubItem
+                    {
+                        Name = "anc"
+                    }
+                }, -1, group)
+                {
+                    Name = address,
+                    Tag = scriptHash
+                });
+            }
+            item.Selected = selected;
+        }
+
+        private void AddContractToListView(VerificationContract contract, bool selected = false)
+        {
+            ListViewItem item = lst_addr.Items[contract.Address];
+            if (item?.Tag is UInt160)
+            {
+                lst_addr.Items.Remove(item);
+                item = null;
+            }
+            if (item == null)
+            {
+                ListViewGroup group = contract.IsStandard ? lst_addr.Groups["standardContractGroup"] : lst_addr.Groups["nonstandardContractGroup"];
+                item = lst_addr.Items.Add(new ListViewItem(new[]
+                {
+                    new ListViewItem.ListViewSubItem
+                    {
+                        Name = "address",
+                        Text = contract.Address
+                    },
+                    new ListViewItem.ListViewSubItem
+                    {
+                        Name = "ans"
+                    },
+                    new ListViewItem.ListViewSubItem
+                    {
+                        Name = "anc"
+                    }
+                }, -1, group)
+                {
+                    Name = contract.Address,
+                    Tag = contract
+                });
+            }
+            item.Selected = selected;
         }
 
         private void CurrentWallet_TransactionsChanged(object sender, IEnumerable<TransactionInfo> transactions)
@@ -219,14 +431,14 @@ namespace Pure.UI
                 foreach (TransactionInfo info in transactions)
                 {
                     string txid = info.Transaction.Hash.ToString();
-                    /*
-                    if (listView3.Items.ContainsKey(txid))
+                    
+                    if (lst_transaction.Items.ContainsKey(txid))
                     {
-                        listView3.Items[txid].Tag = info;
+                        lst_transaction.Items[txid].Tag = info;
                     }
                     else
                     {
-                        listView3.Items.Insert(0, new ListViewItem(new[]
+                        lst_transaction.Items.Insert(0, new ListViewItem(new[]
                         {
                             new ListViewItem.ListViewSubItem
                             {
@@ -257,16 +469,16 @@ namespace Pure.UI
                             Tag = info
                         });
                     }
-                    */
+                    
                 }
-                /*
-                foreach (ListViewItem item in listView3.Items)
+                
+                foreach (ListViewItem item in lst_transaction.Items)
                 {
                     int? confirmations = (int)Blockchain.Default.Height - (int?)((TransactionInfo)item.Tag).Height + 1;
                     if (confirmations <= 0) confirmations = null;
                     item.SubItems["confirmations"].Text = confirmations?.ToString() ?? Strings.Unconfirmed;
                 }
-                */
+                
             }
         }
 
@@ -282,6 +494,43 @@ namespace Pure.UI
         }
 
         private void optionToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void lst_addr_DrawColumnHeader(object sender, DrawListViewColumnHeaderEventArgs e)
+        {
+            using (var sf = new StringFormat())
+            {
+                sf.Alignment = StringAlignment.Near;
+
+                using (var headerFont = new Font("Microsoft Sans Serif", 9, FontStyle.Regular))
+                {
+                    Rectangle rt = e.Bounds;
+                    rt.Width += 1000;
+                    rt.X += 1;
+                    e.Graphics.FillRectangle(new SolidBrush(System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))))), rt);
+
+                    Rectangle rtText = e.Bounds;
+                    rtText.Y = (rtText.Height - headerFont.Height) / 3;
+                    rtText.X += 10;
+                    rtText.Width -= 10;
+                    e.Graphics.DrawString(e.Header.Text, headerFont,
+                        Brushes.White, rtText, sf);
+                    //e.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+
+                    e.Graphics.DrawLine(new Pen(System.Drawing.Color.FromArgb(((int)(((byte)(63)))), ((int)(((byte)(63)))), ((int)(((byte)(63)))))), new Point(e.Bounds.X, e.Bounds.Height - 2), new Point(e.Bounds.Width + e.Bounds.X, e.Bounds.Height - 2));
+                    e.Graphics.DrawLine(new Pen(System.Drawing.Color.FromArgb(((int)(((byte)(63)))), ((int)(((byte)(63)))), ((int)(((byte)(63)))))), new Point(e.Bounds.X + e.Bounds.Width, 2), new Point(e.Bounds.X + e.Bounds.Width, e.Bounds.Height - 6));
+                }
+            }
+        }
+
+        private void lst_addr_DrawItem(object sender, DrawListViewItemEventArgs e)
+        {
+            e.DrawDefault = true;
+        }
+
+        private void lst_addr_DrawSubItem(object sender, DrawListViewSubItemEventArgs e)
         {
 
         }

@@ -29,12 +29,8 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle19 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle20 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle21 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle22 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle23 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle24 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.ListViewGroup listViewGroup1 = new System.Windows.Forms.ListViewGroup("unchecked", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewGroup listViewGroup2 = new System.Windows.Forms.ListViewGroup("checked", System.Windows.Forms.HorizontalAlignment.Left);
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.pureToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.quitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -54,6 +50,17 @@
             this.signatureToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.advancedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pureGasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.requestToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.assetRegistrationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.assetDistributionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.deployContractToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.invokeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.electionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
+            this.optionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.checkForToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.officialWebToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -93,34 +100,23 @@
             this.button1 = new System.Windows.Forms.Button();
             this.pan_split_4 = new System.Windows.Forms.Panel();
             this.pan_transaction = new System.Windows.Forms.Panel();
-            this.dgv_asset = new System.Windows.Forms.DataGridView();
-            this.dgv_asset_asset = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dgv_asset_type = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dgv_asset_balance = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dgv_asset_issure = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel3 = new System.Windows.Forms.Panel();
             this.lbl_assets = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.dgv_transaction_history = new System.Windows.Forms.DataGridView();
-            this.dgv_tx_time = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dgv_tx_transaction_id = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dgv_tx_confirm = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dgv_tx_transaction_type = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel1 = new System.Windows.Forms.Panel();
             this.lbl_transaction_history = new System.Windows.Forms.Label();
             this.pan_split_2 = new System.Windows.Forms.Panel();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.requestToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.assetRegistrationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.assetDistributionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.deployContractToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.invokeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
-            this.electionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
-            this.optionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.lst_transaction = new System.Windows.Forms.ListView();
+            this.lst_asset = new System.Windows.Forms.ListView();
+            this.Time = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.TransactionID = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.confirm = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.transType = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.pan_header.SuspendLayout();
@@ -129,8 +125,6 @@
             this.pan_account_main.SuspendLayout();
             this.pan_send.SuspendLayout();
             this.pan_transaction.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgv_asset)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dgv_transaction_history)).BeginInit();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -284,8 +278,71 @@
             // pureGasToolStripMenuItem
             // 
             this.pureGasToolStripMenuItem.Name = "pureGasToolStripMenuItem";
-            this.pureGasToolStripMenuItem.Size = new System.Drawing.Size(183, 26);
+            this.pureGasToolStripMenuItem.Size = new System.Drawing.Size(215, 26);
             this.pureGasToolStripMenuItem.Text = "PureGas Claim ";
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(212, 6);
+            // 
+            // requestToolStripMenuItem
+            // 
+            this.requestToolStripMenuItem.Name = "requestToolStripMenuItem";
+            this.requestToolStripMenuItem.Size = new System.Drawing.Size(215, 26);
+            this.requestToolStripMenuItem.Text = "Request &Certificate..";
+            // 
+            // assetRegistrationToolStripMenuItem
+            // 
+            this.assetRegistrationToolStripMenuItem.Name = "assetRegistrationToolStripMenuItem";
+            this.assetRegistrationToolStripMenuItem.Size = new System.Drawing.Size(215, 26);
+            this.assetRegistrationToolStripMenuItem.Text = "Asset &Registration..";
+            // 
+            // assetDistributionToolStripMenuItem
+            // 
+            this.assetDistributionToolStripMenuItem.Name = "assetDistributionToolStripMenuItem";
+            this.assetDistributionToolStripMenuItem.Size = new System.Drawing.Size(215, 26);
+            this.assetDistributionToolStripMenuItem.Text = "Asset D&istribution..";
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(212, 6);
+            // 
+            // deployContractToolStripMenuItem
+            // 
+            this.deployContractToolStripMenuItem.Name = "deployContractToolStripMenuItem";
+            this.deployContractToolStripMenuItem.Size = new System.Drawing.Size(215, 26);
+            this.deployContractToolStripMenuItem.Text = "&Deploy Contract";
+            // 
+            // invokeToolStripMenuItem
+            // 
+            this.invokeToolStripMenuItem.Name = "invokeToolStripMenuItem";
+            this.invokeToolStripMenuItem.Size = new System.Drawing.Size(215, 26);
+            this.invokeToolStripMenuItem.Text = "In&voke Contract";
+            // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(212, 6);
+            // 
+            // electionToolStripMenuItem
+            // 
+            this.electionToolStripMenuItem.Name = "electionToolStripMenuItem";
+            this.electionToolStripMenuItem.Size = new System.Drawing.Size(215, 26);
+            this.electionToolStripMenuItem.Text = "&Election";
+            // 
+            // toolStripSeparator4
+            // 
+            this.toolStripSeparator4.Name = "toolStripSeparator4";
+            this.toolStripSeparator4.Size = new System.Drawing.Size(212, 6);
+            // 
+            // optionToolStripMenuItem
+            // 
+            this.optionToolStripMenuItem.Name = "optionToolStripMenuItem";
+            this.optionToolStripMenuItem.Size = new System.Drawing.Size(215, 26);
+            this.optionToolStripMenuItem.Text = "&Options";
+            this.optionToolStripMenuItem.Click += new System.EventHandler(this.optionToolStripMenuItem_Click);
             // 
             // helpToolStripMenuItem
             // 
@@ -489,22 +546,25 @@
             this.lst_addr_address,
             this.lst_addr_pure,
             this.lst_addr_puregas});
-            this.lst_addr.Dock = System.Windows.Forms.DockStyle.Top;
             this.lst_addr.ForeColor = System.Drawing.Color.White;
             this.lst_addr.FullRowSelect = true;
             this.lst_addr.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
             this.lst_addr.HideSelection = false;
-            this.lst_addr.Location = new System.Drawing.Point(0, 0);
+            this.lst_addr.Location = new System.Drawing.Point(12, 9);
             this.lst_addr.Name = "lst_addr";
-            this.lst_addr.Size = new System.Drawing.Size(621, 327);
+            this.lst_addr.OwnerDraw = true;
+            this.lst_addr.Size = new System.Drawing.Size(596, 327);
             this.lst_addr.TabIndex = 0;
             this.lst_addr.UseCompatibleStateImageBehavior = false;
             this.lst_addr.View = System.Windows.Forms.View.Details;
+            this.lst_addr.DrawColumnHeader += new System.Windows.Forms.DrawListViewColumnHeaderEventHandler(this.lst_addr_DrawColumnHeader);
+            this.lst_addr.DrawItem += new System.Windows.Forms.DrawListViewItemEventHandler(this.lst_addr_DrawItem);
+            this.lst_addr.DrawSubItem += new System.Windows.Forms.DrawListViewSubItemEventHandler(this.lst_addr_DrawSubItem);
             // 
             // lst_addr_address
             // 
             this.lst_addr_address.Text = "Address";
-            this.lst_addr_address.Width = 300;
+            this.lst_addr_address.Width = 298;
             // 
             // lst_addr_pure
             // 
@@ -661,11 +721,11 @@
             // pan_transaction
             // 
             this.pan_transaction.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            this.pan_transaction.Controls.Add(this.dgv_asset);
+            this.pan_transaction.Controls.Add(this.lst_asset);
+            this.pan_transaction.Controls.Add(this.lst_transaction);
             this.pan_transaction.Controls.Add(this.panel3);
             this.pan_transaction.Controls.Add(this.lbl_assets);
             this.pan_transaction.Controls.Add(this.panel2);
-            this.pan_transaction.Controls.Add(this.dgv_transaction_history);
             this.pan_transaction.Controls.Add(this.panel1);
             this.pan_transaction.Controls.Add(this.lbl_transaction_history);
             this.pan_transaction.Controls.Add(this.pan_split_2);
@@ -674,69 +734,6 @@
             this.pan_transaction.Name = "pan_transaction";
             this.pan_transaction.Size = new System.Drawing.Size(641, 666);
             this.pan_transaction.TabIndex = 5;
-            // 
-            // dgv_asset
-            // 
-            this.dgv_asset.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            this.dgv_asset.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.dgv_asset.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
-            dataGridViewCellStyle19.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle19.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            dataGridViewCellStyle19.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle19.ForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle19.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(63)))), ((int)(((byte)(63)))), ((int)(((byte)(63)))));
-            dataGridViewCellStyle19.SelectionForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle19.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgv_asset.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle19;
-            this.dgv_asset.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgv_asset.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.dgv_asset_asset,
-            this.dgv_asset_type,
-            this.dgv_asset_balance,
-            this.dgv_asset_issure});
-            dataGridViewCellStyle20.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle20.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            dataGridViewCellStyle20.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle20.ForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle20.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(63)))), ((int)(((byte)(63)))), ((int)(((byte)(63)))));
-            dataGridViewCellStyle20.SelectionForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle20.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgv_asset.DefaultCellStyle = dataGridViewCellStyle20;
-            this.dgv_asset.EnableHeadersVisualStyles = false;
-            this.dgv_asset.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(63)))), ((int)(((byte)(63)))), ((int)(((byte)(63)))));
-            this.dgv_asset.Location = new System.Drawing.Point(24, 451);
-            this.dgv_asset.Name = "dgv_asset";
-            this.dgv_asset.RowHeadersVisible = false;
-            this.dgv_asset.RowTemplate.Height = 24;
-            this.dgv_asset.Size = new System.Drawing.Size(587, 200);
-            this.dgv_asset.TabIndex = 7;
-            // 
-            // dgv_asset_asset
-            // 
-            this.dgv_asset_asset.HeaderText = "Asset";
-            this.dgv_asset_asset.Name = "dgv_asset_asset";
-            this.dgv_asset_asset.ReadOnly = true;
-            this.dgv_asset_asset.Width = 160;
-            // 
-            // dgv_asset_type
-            // 
-            this.dgv_asset_type.HeaderText = "Type";
-            this.dgv_asset_type.Name = "dgv_asset_type";
-            this.dgv_asset_type.ReadOnly = true;
-            // 
-            // dgv_asset_balance
-            // 
-            this.dgv_asset_balance.HeaderText = "Balance";
-            this.dgv_asset_balance.Name = "dgv_asset_balance";
-            this.dgv_asset_balance.ReadOnly = true;
-            this.dgv_asset_balance.Width = 192;
-            // 
-            // dgv_asset_issure
-            // 
-            this.dgv_asset_issure.HeaderText = "Issure";
-            this.dgv_asset_issure.Name = "dgv_asset_issure";
-            this.dgv_asset_issure.ReadOnly = true;
-            this.dgv_asset_issure.Width = 250;
             // 
             // panel3
             // 
@@ -765,83 +762,6 @@
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(640, 1);
             this.panel2.TabIndex = 4;
-            // 
-            // dgv_transaction_history
-            // 
-            this.dgv_transaction_history.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            this.dgv_transaction_history.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.dgv_transaction_history.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
-            dataGridViewCellStyle21.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle21.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            dataGridViewCellStyle21.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle21.ForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle21.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(63)))), ((int)(((byte)(63)))), ((int)(((byte)(63)))));
-            dataGridViewCellStyle21.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle21.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgv_transaction_history.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle21;
-            this.dgv_transaction_history.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgv_transaction_history.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.dgv_tx_time,
-            this.dgv_tx_transaction_id,
-            this.dgv_tx_confirm,
-            this.dgv_tx_transaction_type});
-            dataGridViewCellStyle22.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle22.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            dataGridViewCellStyle22.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle22.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle22.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(63)))), ((int)(((byte)(63)))), ((int)(((byte)(63)))));
-            dataGridViewCellStyle22.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle22.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgv_transaction_history.DefaultCellStyle = dataGridViewCellStyle22;
-            this.dgv_transaction_history.EnableHeadersVisualStyles = false;
-            this.dgv_transaction_history.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(63)))), ((int)(((byte)(63)))), ((int)(((byte)(63)))));
-            this.dgv_transaction_history.Location = new System.Drawing.Point(24, 61);
-            this.dgv_transaction_history.MultiSelect = false;
-            this.dgv_transaction_history.Name = "dgv_transaction_history";
-            dataGridViewCellStyle23.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle23.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            dataGridViewCellStyle23.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle23.ForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle23.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(63)))), ((int)(((byte)(63)))), ((int)(((byte)(63)))));
-            dataGridViewCellStyle23.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle23.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgv_transaction_history.RowHeadersDefaultCellStyle = dataGridViewCellStyle23;
-            this.dgv_transaction_history.RowHeadersVisible = false;
-            dataGridViewCellStyle24.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            dataGridViewCellStyle24.ForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle24.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(63)))), ((int)(((byte)(63)))), ((int)(((byte)(63)))));
-            this.dgv_transaction_history.RowsDefaultCellStyle = dataGridViewCellStyle24;
-            this.dgv_transaction_history.RowTemplate.Height = 24;
-            this.dgv_transaction_history.Size = new System.Drawing.Size(587, 332);
-            this.dgv_transaction_history.TabIndex = 3;
-            // 
-            // dgv_tx_time
-            // 
-            this.dgv_tx_time.HeaderText = "Time";
-            this.dgv_tx_time.Name = "dgv_tx_time";
-            this.dgv_tx_time.ReadOnly = true;
-            this.dgv_tx_time.Width = 130;
-            // 
-            // dgv_tx_transaction_id
-            // 
-            this.dgv_tx_transaction_id.HeaderText = "Transaction ID";
-            this.dgv_tx_transaction_id.Name = "dgv_tx_transaction_id";
-            this.dgv_tx_transaction_id.ReadOnly = true;
-            this.dgv_tx_transaction_id.Width = 250;
-            // 
-            // dgv_tx_confirm
-            // 
-            this.dgv_tx_confirm.HeaderText = "Confirm";
-            this.dgv_tx_confirm.Name = "dgv_tx_confirm";
-            this.dgv_tx_confirm.ReadOnly = true;
-            this.dgv_tx_confirm.Width = 78;
-            // 
-            // dgv_tx_transaction_type
-            // 
-            this.dgv_tx_transaction_type.HeaderText = "Transaction Type";
-            this.dgv_tx_transaction_type.Name = "dgv_tx_transaction_type";
-            this.dgv_tx_transaction_type.ReadOnly = true;
-            this.dgv_tx_transaction_type.Width = 163;
             // 
             // panel1
             // 
@@ -877,68 +797,80 @@
             this.timer1.Interval = 500;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
-            // requestToolStripMenuItem
+            // lst_transaction
             // 
-            this.requestToolStripMenuItem.Name = "requestToolStripMenuItem";
-            this.requestToolStripMenuItem.Size = new System.Drawing.Size(215, 26);
-            this.requestToolStripMenuItem.Text = "Request &Certificate..";
+            this.lst_transaction.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
+            this.lst_transaction.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.Time,
+            this.TransactionID,
+            this.confirm,
+            this.transType});
+            this.lst_transaction.Location = new System.Drawing.Point(24, 66);
+            this.lst_transaction.Name = "lst_transaction";
+            this.lst_transaction.Size = new System.Drawing.Size(587, 336);
+            this.lst_transaction.TabIndex = 7;
+            this.lst_transaction.UseCompatibleStateImageBehavior = false;
+            this.lst_transaction.View = System.Windows.Forms.View.Details;
             // 
-            // assetRegistrationToolStripMenuItem
+            // lst_asset
             // 
-            this.assetRegistrationToolStripMenuItem.Name = "assetRegistrationToolStripMenuItem";
-            this.assetRegistrationToolStripMenuItem.Size = new System.Drawing.Size(215, 26);
-            this.assetRegistrationToolStripMenuItem.Text = "Asset &Registration..";
+            this.lst_asset.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
+            this.lst_asset.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader1,
+            this.columnHeader2,
+            this.columnHeader3,
+            this.columnHeader4});
+            listViewGroup1.Header = "unchecked";
+            listViewGroup1.Name = "unchecked";
+            listViewGroup2.Header = "checked";
+            listViewGroup2.Name = "checked";
+            this.lst_asset.Groups.AddRange(new System.Windows.Forms.ListViewGroup[] {
+            listViewGroup1,
+            listViewGroup2});
+            this.lst_asset.Location = new System.Drawing.Point(24, 451);
+            this.lst_asset.Name = "lst_asset";
+            this.lst_asset.Size = new System.Drawing.Size(587, 194);
+            this.lst_asset.TabIndex = 8;
+            this.lst_asset.UseCompatibleStateImageBehavior = false;
+            this.lst_asset.View = System.Windows.Forms.View.Details;
             // 
-            // assetDistributionToolStripMenuItem
+            // Time
             // 
-            this.assetDistributionToolStripMenuItem.Name = "assetDistributionToolStripMenuItem";
-            this.assetDistributionToolStripMenuItem.Size = new System.Drawing.Size(215, 26);
-            this.assetDistributionToolStripMenuItem.Text = "Asset D&istribution..";
+            this.Time.Text = "Time";
+            this.Time.Width = 100;
             // 
-            // toolStripSeparator1
+            // TransactionID
             // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(212, 6);
+            this.TransactionID.Text = "Transaction ID";
+            this.TransactionID.Width = 250;
             // 
-            // toolStripSeparator2
+            // confirm
             // 
-            this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(212, 6);
+            this.confirm.Text = "Confirm";
             // 
-            // deployContractToolStripMenuItem
+            // transType
             // 
-            this.deployContractToolStripMenuItem.Name = "deployContractToolStripMenuItem";
-            this.deployContractToolStripMenuItem.Size = new System.Drawing.Size(215, 26);
-            this.deployContractToolStripMenuItem.Text = "&Deploy Contract";
+            this.transType.Text = "Transaction Type";
+            this.transType.Width = 120;
             // 
-            // invokeToolStripMenuItem
+            // columnHeader1
             // 
-            this.invokeToolStripMenuItem.Name = "invokeToolStripMenuItem";
-            this.invokeToolStripMenuItem.Size = new System.Drawing.Size(215, 26);
-            this.invokeToolStripMenuItem.Text = "In&voke Contract";
+            this.columnHeader1.Text = "Asset";
+            this.columnHeader1.Width = 100;
             // 
-            // toolStripSeparator3
+            // columnHeader2
             // 
-            this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(212, 6);
+            this.columnHeader2.Text = "Type";
             // 
-            // electionToolStripMenuItem
+            // columnHeader3
             // 
-            this.electionToolStripMenuItem.Name = "electionToolStripMenuItem";
-            this.electionToolStripMenuItem.Size = new System.Drawing.Size(215, 26);
-            this.electionToolStripMenuItem.Text = "&Election";
+            this.columnHeader3.Text = "Balance";
+            this.columnHeader3.Width = 150;
             // 
-            // toolStripSeparator4
+            // columnHeader4
             // 
-            this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(212, 6);
-            // 
-            // optionToolStripMenuItem
-            // 
-            this.optionToolStripMenuItem.Name = "optionToolStripMenuItem";
-            this.optionToolStripMenuItem.Size = new System.Drawing.Size(215, 26);
-            this.optionToolStripMenuItem.Text = "&Options";
-            this.optionToolStripMenuItem.Click += new System.EventHandler(this.optionToolStripMenuItem_Click);
+            this.columnHeader4.Text = "Issure";
+            this.columnHeader4.Width = 350;
             // 
             // MainForm
             // 
@@ -970,8 +902,6 @@
             this.pan_send.ResumeLayout(false);
             this.pan_transaction.ResumeLayout(false);
             this.pan_transaction.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgv_asset)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dgv_transaction_history)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1019,18 +949,8 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label lbl_transaction_history;
         private System.Windows.Forms.Panel pan_split_2;
-        private System.Windows.Forms.DataGridView dgv_transaction_history;
         private System.Windows.Forms.Panel pan_split_4;
         private System.Windows.Forms.Panel panel2;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dgv_tx_time;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dgv_tx_transaction_id;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dgv_tx_confirm;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dgv_tx_transaction_type;
-        private System.Windows.Forms.DataGridView dgv_asset;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dgv_asset_asset;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dgv_asset_type;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dgv_asset_balance;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dgv_asset_issure;
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.Label lbl_assets;
         private System.Windows.Forms.Panel pan_header;
@@ -1065,5 +985,15 @@
         private System.Windows.Forms.ToolStripMenuItem electionToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
         private System.Windows.Forms.ToolStripMenuItem optionToolStripMenuItem;
+        private System.Windows.Forms.ListView lst_asset;
+        private System.Windows.Forms.ColumnHeader columnHeader1;
+        private System.Windows.Forms.ColumnHeader columnHeader2;
+        private System.Windows.Forms.ColumnHeader columnHeader3;
+        private System.Windows.Forms.ColumnHeader columnHeader4;
+        private System.Windows.Forms.ListView lst_transaction;
+        private System.Windows.Forms.ColumnHeader Time;
+        private System.Windows.Forms.ColumnHeader TransactionID;
+        private System.Windows.Forms.ColumnHeader confirm;
+        private System.Windows.Forms.ColumnHeader transType;
     }
 }
