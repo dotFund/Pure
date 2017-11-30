@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace PureWallet.Properties {
+namespace Pure.Properties {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace PureWallet.Properties {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("PureWallet.Properties.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Pure.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -92,7 +92,7 @@ namespace PureWallet.Properties {
         
         /// <summary>
         ///   Looks up a localized string similar to @echo off
-        ///set &quot;taskname=PureWallet.exe&quot;
+        ///set &quot;taskname=Pure.exe&quot;
         ///echo waiting...
         ///:wait
         ///ping 127.0.1 -n 3 &gt;nul

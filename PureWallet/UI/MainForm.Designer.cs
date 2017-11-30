@@ -1,4 +1,4 @@
-﻿namespace PureWallet.UI
+﻿namespace Pure.UI
 {
     partial class MainForm
     {
@@ -29,12 +29,12 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle19 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle20 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle21 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle22 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle23 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle24 = new System.Windows.Forms.DataGridViewCellStyle();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.pureToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.quitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -75,6 +75,10 @@
             this.lbl_pure_title = new System.Windows.Forms.Label();
             this.pan_account = new System.Windows.Forms.Panel();
             this.pan_send_main = new System.Windows.Forms.Panel();
+            this.lst_addr = new System.Windows.Forms.ListView();
+            this.lst_addr_address = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.lst_addr_pure = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.lst_addr_puregas = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.pan_account_main = new System.Windows.Forms.Panel();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -106,10 +110,22 @@
             this.lbl_transaction_history = new System.Windows.Forms.Label();
             this.pan_split_2 = new System.Windows.Forms.Panel();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.requestToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.assetRegistrationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.assetDistributionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.deployContractToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.invokeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.electionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
+            this.optionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.pan_header.SuspendLayout();
             this.pan_account.SuspendLayout();
+            this.pan_send_main.SuspendLayout();
             this.pan_account_main.SuspendLayout();
             this.pan_send.SuspendLayout();
             this.pan_transaction.SuspendLayout();
@@ -168,6 +184,7 @@
             this.newWalletToolStripMenuItem.Name = "newWalletToolStripMenuItem";
             this.newWalletToolStripMenuItem.Size = new System.Drawing.Size(199, 26);
             this.newWalletToolStripMenuItem.Text = "New Wallet";
+            this.newWalletToolStripMenuItem.Click += new System.EventHandler(this.newWalletToolStripMenuItem_Click);
             // 
             // openWalletToolStripMenuItem
             // 
@@ -216,6 +233,7 @@
             this.transactionsToolStripMenuItem,
             this.aToolStripMenuItem1,
             this.signatureToolStripMenuItem});
+            this.transactionToolStripMenuItem.Enabled = false;
             this.transactionToolStripMenuItem.Name = "transactionToolStripMenuItem";
             this.transactionToolStripMenuItem.Size = new System.Drawing.Size(96, 24);
             this.transactionToolStripMenuItem.Text = "&Transaction";
@@ -247,7 +265,18 @@
             // advancedToolStripMenuItem
             // 
             this.advancedToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.pureGasToolStripMenuItem});
+            this.pureGasToolStripMenuItem,
+            this.toolStripSeparator1,
+            this.requestToolStripMenuItem,
+            this.assetRegistrationToolStripMenuItem,
+            this.assetDistributionToolStripMenuItem,
+            this.toolStripSeparator2,
+            this.deployContractToolStripMenuItem,
+            this.invokeToolStripMenuItem,
+            this.toolStripSeparator3,
+            this.electionToolStripMenuItem,
+            this.toolStripSeparator4,
+            this.optionToolStripMenuItem});
             this.advancedToolStripMenuItem.Name = "advancedToolStripMenuItem";
             this.advancedToolStripMenuItem.Size = new System.Drawing.Size(87, 24);
             this.advancedToolStripMenuItem.Text = "&Advanced";
@@ -397,7 +426,7 @@
             // 
             this.btn_menu.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.btn_menu.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.btn_menu.BackgroundImage = global::PureWallet.Properties.Resources.btn_menu_normal;
+            this.btn_menu.BackgroundImage = global::Pure.Properties.Resources.btn_menu_normal;
             this.btn_menu.FlatAppearance.BorderSize = 0;
             this.btn_menu.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btn_menu.ForeColor = System.Drawing.Color.White;
@@ -446,11 +475,46 @@
             // 
             // pan_send_main
             // 
+            this.pan_send_main.Controls.Add(this.lst_addr);
             this.pan_send_main.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pan_send_main.Location = new System.Drawing.Point(0, 66);
             this.pan_send_main.Name = "pan_send_main";
-            this.pan_send_main.Size = new System.Drawing.Size(621, 170);
+            this.pan_send_main.Size = new System.Drawing.Size(621, 579);
             this.pan_send_main.TabIndex = 4;
+            // 
+            // lst_addr
+            // 
+            this.lst_addr.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
+            this.lst_addr.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.lst_addr_address,
+            this.lst_addr_pure,
+            this.lst_addr_puregas});
+            this.lst_addr.Dock = System.Windows.Forms.DockStyle.Top;
+            this.lst_addr.ForeColor = System.Drawing.Color.White;
+            this.lst_addr.FullRowSelect = true;
+            this.lst_addr.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+            this.lst_addr.HideSelection = false;
+            this.lst_addr.Location = new System.Drawing.Point(0, 0);
+            this.lst_addr.Name = "lst_addr";
+            this.lst_addr.Size = new System.Drawing.Size(621, 327);
+            this.lst_addr.TabIndex = 0;
+            this.lst_addr.UseCompatibleStateImageBehavior = false;
+            this.lst_addr.View = System.Windows.Forms.View.Details;
+            // 
+            // lst_addr_address
+            // 
+            this.lst_addr_address.Text = "Address";
+            this.lst_addr_address.Width = 300;
+            // 
+            // lst_addr_pure
+            // 
+            this.lst_addr_pure.Text = "Pure";
+            this.lst_addr_pure.Width = 120;
+            // 
+            // lst_addr_puregas
+            // 
+            this.lst_addr_puregas.Text = "Pure Gas";
+            this.lst_addr_puregas.Width = 120;
             // 
             // pan_account_main
             // 
@@ -464,16 +528,16 @@
             this.pan_account_main.Controls.Add(this.comboBox1);
             this.pan_account_main.Controls.Add(this.lbl_address);
             this.pan_account_main.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.pan_account_main.Location = new System.Drawing.Point(0, 236);
+            this.pan_account_main.Location = new System.Drawing.Point(0, 645);
             this.pan_account_main.Name = "pan_account_main";
-            this.pan_account_main.Size = new System.Drawing.Size(621, 429);
+            this.pan_account_main.Size = new System.Drawing.Size(621, 20);
             this.pan_account_main.TabIndex = 3;
             // 
             // label4
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 36F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.ForeColor = System.Drawing.Color.White;
+            this.label4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
             this.label4.Location = new System.Drawing.Point(436, 137);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(63, 69);
@@ -484,7 +548,7 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 36F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.ForeColor = System.Drawing.Color.White;
+            this.label3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
             this.label3.Location = new System.Drawing.Point(124, 137);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(63, 69);
@@ -616,28 +680,28 @@
             this.dgv_asset.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
             this.dgv_asset.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.dgv_asset.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
-            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle7.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            dataGridViewCellStyle7.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle7.ForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(63)))), ((int)(((byte)(63)))), ((int)(((byte)(63)))));
-            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgv_asset.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewCellStyle19.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle19.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
+            dataGridViewCellStyle19.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle19.ForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle19.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(63)))), ((int)(((byte)(63)))), ((int)(((byte)(63)))));
+            dataGridViewCellStyle19.SelectionForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle19.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgv_asset.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle19;
             this.dgv_asset.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgv_asset.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.dgv_asset_asset,
             this.dgv_asset_type,
             this.dgv_asset_balance,
             this.dgv_asset_issure});
-            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle8.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            dataGridViewCellStyle8.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle8.ForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(63)))), ((int)(((byte)(63)))), ((int)(((byte)(63)))));
-            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgv_asset.DefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle20.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle20.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
+            dataGridViewCellStyle20.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle20.ForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle20.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(63)))), ((int)(((byte)(63)))), ((int)(((byte)(63)))));
+            dataGridViewCellStyle20.SelectionForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle20.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgv_asset.DefaultCellStyle = dataGridViewCellStyle20;
             this.dgv_asset.EnableHeadersVisualStyles = false;
             this.dgv_asset.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(63)))), ((int)(((byte)(63)))), ((int)(((byte)(63)))));
             this.dgv_asset.Location = new System.Drawing.Point(24, 451);
@@ -686,7 +750,7 @@
             // 
             this.lbl_assets.AutoSize = true;
             this.lbl_assets.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_assets.ForeColor = System.Drawing.Color.White;
+            this.lbl_assets.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
             this.lbl_assets.Location = new System.Drawing.Point(281, 406);
             this.lbl_assets.Name = "lbl_assets";
             this.lbl_assets.Size = new System.Drawing.Size(72, 29);
@@ -707,46 +771,46 @@
             this.dgv_transaction_history.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
             this.dgv_transaction_history.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.dgv_transaction_history.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
-            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle9.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            dataGridViewCellStyle9.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle9.ForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle9.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(63)))), ((int)(((byte)(63)))), ((int)(((byte)(63)))));
-            dataGridViewCellStyle9.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgv_transaction_history.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle9;
+            dataGridViewCellStyle21.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle21.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
+            dataGridViewCellStyle21.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle21.ForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle21.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(63)))), ((int)(((byte)(63)))), ((int)(((byte)(63)))));
+            dataGridViewCellStyle21.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle21.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgv_transaction_history.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle21;
             this.dgv_transaction_history.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgv_transaction_history.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.dgv_tx_time,
             this.dgv_tx_transaction_id,
             this.dgv_tx_confirm,
             this.dgv_tx_transaction_type});
-            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle10.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            dataGridViewCellStyle10.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle10.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle10.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(63)))), ((int)(((byte)(63)))), ((int)(((byte)(63)))));
-            dataGridViewCellStyle10.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle10.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgv_transaction_history.DefaultCellStyle = dataGridViewCellStyle10;
+            dataGridViewCellStyle22.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle22.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
+            dataGridViewCellStyle22.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle22.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle22.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(63)))), ((int)(((byte)(63)))), ((int)(((byte)(63)))));
+            dataGridViewCellStyle22.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle22.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgv_transaction_history.DefaultCellStyle = dataGridViewCellStyle22;
             this.dgv_transaction_history.EnableHeadersVisualStyles = false;
             this.dgv_transaction_history.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(63)))), ((int)(((byte)(63)))), ((int)(((byte)(63)))));
             this.dgv_transaction_history.Location = new System.Drawing.Point(24, 61);
             this.dgv_transaction_history.MultiSelect = false;
             this.dgv_transaction_history.Name = "dgv_transaction_history";
-            dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle11.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            dataGridViewCellStyle11.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle11.ForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle11.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(63)))), ((int)(((byte)(63)))), ((int)(((byte)(63)))));
-            dataGridViewCellStyle11.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle11.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgv_transaction_history.RowHeadersDefaultCellStyle = dataGridViewCellStyle11;
+            dataGridViewCellStyle23.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle23.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
+            dataGridViewCellStyle23.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle23.ForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle23.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(63)))), ((int)(((byte)(63)))), ((int)(((byte)(63)))));
+            dataGridViewCellStyle23.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle23.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgv_transaction_history.RowHeadersDefaultCellStyle = dataGridViewCellStyle23;
             this.dgv_transaction_history.RowHeadersVisible = false;
-            dataGridViewCellStyle12.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            dataGridViewCellStyle12.ForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle12.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(63)))), ((int)(((byte)(63)))), ((int)(((byte)(63)))));
-            this.dgv_transaction_history.RowsDefaultCellStyle = dataGridViewCellStyle12;
+            dataGridViewCellStyle24.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
+            dataGridViewCellStyle24.ForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle24.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(63)))), ((int)(((byte)(63)))), ((int)(((byte)(63)))));
+            this.dgv_transaction_history.RowsDefaultCellStyle = dataGridViewCellStyle24;
             this.dgv_transaction_history.RowTemplate.Height = 24;
             this.dgv_transaction_history.Size = new System.Drawing.Size(587, 332);
             this.dgv_transaction_history.TabIndex = 3;
@@ -791,7 +855,7 @@
             // 
             this.lbl_transaction_history.AutoSize = true;
             this.lbl_transaction_history.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_transaction_history.ForeColor = System.Drawing.Color.White;
+            this.lbl_transaction_history.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
             this.lbl_transaction_history.Location = new System.Drawing.Point(193, 12);
             this.lbl_transaction_history.Name = "lbl_transaction_history";
             this.lbl_transaction_history.Size = new System.Drawing.Size(219, 29);
@@ -813,6 +877,69 @@
             this.timer1.Interval = 500;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
+            // requestToolStripMenuItem
+            // 
+            this.requestToolStripMenuItem.Name = "requestToolStripMenuItem";
+            this.requestToolStripMenuItem.Size = new System.Drawing.Size(215, 26);
+            this.requestToolStripMenuItem.Text = "Request &Certificate..";
+            // 
+            // assetRegistrationToolStripMenuItem
+            // 
+            this.assetRegistrationToolStripMenuItem.Name = "assetRegistrationToolStripMenuItem";
+            this.assetRegistrationToolStripMenuItem.Size = new System.Drawing.Size(215, 26);
+            this.assetRegistrationToolStripMenuItem.Text = "Asset &Registration..";
+            // 
+            // assetDistributionToolStripMenuItem
+            // 
+            this.assetDistributionToolStripMenuItem.Name = "assetDistributionToolStripMenuItem";
+            this.assetDistributionToolStripMenuItem.Size = new System.Drawing.Size(215, 26);
+            this.assetDistributionToolStripMenuItem.Text = "Asset D&istribution..";
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(212, 6);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(212, 6);
+            // 
+            // deployContractToolStripMenuItem
+            // 
+            this.deployContractToolStripMenuItem.Name = "deployContractToolStripMenuItem";
+            this.deployContractToolStripMenuItem.Size = new System.Drawing.Size(215, 26);
+            this.deployContractToolStripMenuItem.Text = "&Deploy Contract";
+            // 
+            // invokeToolStripMenuItem
+            // 
+            this.invokeToolStripMenuItem.Name = "invokeToolStripMenuItem";
+            this.invokeToolStripMenuItem.Size = new System.Drawing.Size(215, 26);
+            this.invokeToolStripMenuItem.Text = "In&voke Contract";
+            // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(212, 6);
+            // 
+            // electionToolStripMenuItem
+            // 
+            this.electionToolStripMenuItem.Name = "electionToolStripMenuItem";
+            this.electionToolStripMenuItem.Size = new System.Drawing.Size(215, 26);
+            this.electionToolStripMenuItem.Text = "&Election";
+            // 
+            // toolStripSeparator4
+            // 
+            this.toolStripSeparator4.Name = "toolStripSeparator4";
+            this.toolStripSeparator4.Size = new System.Drawing.Size(212, 6);
+            // 
+            // optionToolStripMenuItem
+            // 
+            this.optionToolStripMenuItem.Name = "optionToolStripMenuItem";
+            this.optionToolStripMenuItem.Size = new System.Drawing.Size(215, 26);
+            this.optionToolStripMenuItem.Text = "&Options";
+            this.optionToolStripMenuItem.Click += new System.EventHandler(this.optionToolStripMenuItem_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(120F, 120F);
@@ -828,6 +955,8 @@
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "MainForm";
             this.Text = "Pure Wallet";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
+            this.Load += new System.EventHandler(this.MainForm_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.statusStrip1.ResumeLayout(false);
@@ -835,6 +964,7 @@
             this.pan_header.ResumeLayout(false);
             this.pan_header.PerformLayout();
             this.pan_account.ResumeLayout(false);
+            this.pan_send_main.ResumeLayout(false);
             this.pan_account_main.ResumeLayout(false);
             this.pan_account_main.PerformLayout();
             this.pan_send.ResumeLayout(false);
@@ -920,5 +1050,20 @@
         private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.Label lbl_address;
         private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.ListView lst_addr;
+        private System.Windows.Forms.ColumnHeader lst_addr_address;
+        private System.Windows.Forms.ColumnHeader lst_addr_pure;
+        private System.Windows.Forms.ColumnHeader lst_addr_puregas;
+        private System.Windows.Forms.ToolStripMenuItem requestToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem assetRegistrationToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem assetDistributionToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+        private System.Windows.Forms.ToolStripMenuItem deployContractToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem invokeToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
+        private System.Windows.Forms.ToolStripMenuItem electionToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
+        private System.Windows.Forms.ToolStripMenuItem optionToolStripMenuItem;
     }
 }

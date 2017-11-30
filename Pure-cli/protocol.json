@@ -1,23 +1,19 @@
 ﻿{
   "ProtocolConfiguration": {
-    "Magic": 7630401,
+    "Magic": 1709090,
     "AddressVersion": 23,
     "StandbyValidators": [
-      "03b209fd4f53a7170ea4444e0cb0a6bb6a53c2bd016926989cf85f9b0fba17a70c",
-      "02df48f60e8f3e01c48ff40b9b7f1310d7a8b2a193188befe1c2e3df740e895093",
-      "03b8d9d5771d8f513aa0869b9cc8d50986403b78c6da36890638c3d46a5adce04a",
-      "02ca0e27697b9c248f6f16e085fd0061e26f44da85b58ee835c110caa5ec3ba554",
-      "024c7b7fb6c310fccf1ba33b082519d82964ea93868d676662d4a59ad548df0e7d",
-      "02aaec38470f6aad0042c6e877cfd8087d2676b0f516fddd362801b9bd3936399e",
-      "02486fd15702c4490a26703112a5cc1d0923fd697a33406bd5a1c00e0013b09a70"
-    ],
+      "02609107d2e11d1a8cc781eae661edfab161f8c4df5d83caceacdc0e6e0bcf5e03",
+      "03ab9c5659654478cff3e77aab78fbb97a4ce41a317c1b737b13564f06b6b3f2e8",
+      "0206841a10378bfa7c65077edc1107e88e4486baf3e6a9a0d3e8235d5fa9c08c8a",
+      "0329eeb490e527698611a0ba01d2ecb5d2bdf807b77220331d5a560edfa0c30bfc"
+   ],
     "SeedList": [
-      "seed1.neo.org:10333",
-      "seed2.neo.org:10333",
-      "seed3.neo.org:10333",
-      "seed4.neo.org:10333",
-      "seed5.neo.org:10333"
-    ],
+      "192.168.5.90:10909",
+      "192.168.5.50:10909",
+      "192.168.5.157:10909",
+      "192.168.5.142:10909"
+   ],
     "SystemFee": {
       "EnrollmentTransaction": 1000,
       "IssueTransaction": 500,

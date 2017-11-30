@@ -2,8 +2,8 @@
 using Pure.Implementations.Blockchains.LevelDB;
 using Pure.Implementations.Wallets.EntityFramework;
 using Pure.Network;
-using PureWallet.Properties;
-using PureWallet.UI;
+using Pure.Properties;
+using Pure.UI;
 using System;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -14,7 +14,7 @@ using System.Security.Cryptography.X509Certificates;
 using System.Windows.Forms;
 using System.Xml.Linq;
 
-namespace PureWallet
+namespace Pure
 {
     static class Program
     {

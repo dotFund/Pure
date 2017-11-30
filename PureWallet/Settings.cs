@@ -2,7 +2,7 @@
 using System.Linq;
 using Pure;
 
-namespace PureWallet.Properties {
+namespace Pure.Properties {
     
     
     // This class allows you to handle specific events on the settings class:
