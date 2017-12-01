@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.ListViewGroup listViewGroup5 = new System.Windows.Forms.ListViewGroup("unchecked", System.Windows.Forms.HorizontalAlignment.Left);
-            System.Windows.Forms.ListViewGroup listViewGroup6 = new System.Windows.Forms.ListViewGroup("checked", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewGroup listViewGroup1 = new System.Windows.Forms.ListViewGroup("unchecked", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewGroup listViewGroup2 = new System.Windows.Forms.ListViewGroup("checked", System.Windows.Forms.HorizontalAlignment.Left);
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.pureToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.quitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -100,6 +100,16 @@
             this.button1 = new System.Windows.Forms.Button();
             this.pan_split_4 = new System.Windows.Forms.Panel();
             this.pan_transaction = new System.Windows.Forms.Panel();
+            this.lst_asset = new System.Windows.Forms.ListView();
+            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.lst_transaction = new System.Windows.Forms.ListView();
+            this.Time = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.TransactionID = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.confirm = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.transType = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.panel3 = new System.Windows.Forms.Panel();
             this.lbl_assets = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
@@ -107,16 +117,6 @@
             this.lbl_transaction_history = new System.Windows.Forms.Label();
             this.pan_split_2 = new System.Windows.Forms.Panel();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.lst_transaction = new System.Windows.Forms.ListView();
-            this.lst_asset = new System.Windows.Forms.ListView();
-            this.Time = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.TransactionID = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.confirm = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.transType = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.pan_header.SuspendLayout();
@@ -242,6 +242,7 @@
             this.transferToolStripMenuItem.Name = "transferToolStripMenuItem";
             this.transferToolStripMenuItem.Size = new System.Drawing.Size(184, 26);
             this.transferToolStripMenuItem.Text = "Transfer";
+            this.transferToolStripMenuItem.Click += new System.EventHandler(this.transferToolStripMenuItem_Click);
             // 
             // transactionsToolStripMenuItem
             // 
@@ -739,6 +740,81 @@
             this.pan_transaction.Size = new System.Drawing.Size(641, 666);
             this.pan_transaction.TabIndex = 5;
             // 
+            // lst_asset
+            // 
+            this.lst_asset.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
+            this.lst_asset.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader1,
+            this.columnHeader2,
+            this.columnHeader3,
+            this.columnHeader4});
+            listViewGroup1.Header = "unchecked";
+            listViewGroup1.Name = "unchecked";
+            listViewGroup2.Header = "checked";
+            listViewGroup2.Name = "checked";
+            this.lst_asset.Groups.AddRange(new System.Windows.Forms.ListViewGroup[] {
+            listViewGroup1,
+            listViewGroup2});
+            this.lst_asset.Location = new System.Drawing.Point(24, 451);
+            this.lst_asset.Name = "lst_asset";
+            this.lst_asset.Size = new System.Drawing.Size(587, 194);
+            this.lst_asset.TabIndex = 8;
+            this.lst_asset.UseCompatibleStateImageBehavior = false;
+            this.lst_asset.View = System.Windows.Forms.View.Details;
+            // 
+            // columnHeader1
+            // 
+            this.columnHeader1.Text = "Asset";
+            this.columnHeader1.Width = 100;
+            // 
+            // columnHeader2
+            // 
+            this.columnHeader2.Text = "Type";
+            // 
+            // columnHeader3
+            // 
+            this.columnHeader3.Text = "Balance";
+            this.columnHeader3.Width = 150;
+            // 
+            // columnHeader4
+            // 
+            this.columnHeader4.Text = "Issure";
+            this.columnHeader4.Width = 350;
+            // 
+            // lst_transaction
+            // 
+            this.lst_transaction.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
+            this.lst_transaction.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.Time,
+            this.TransactionID,
+            this.confirm,
+            this.transType});
+            this.lst_transaction.Location = new System.Drawing.Point(24, 66);
+            this.lst_transaction.Name = "lst_transaction";
+            this.lst_transaction.Size = new System.Drawing.Size(587, 336);
+            this.lst_transaction.TabIndex = 7;
+            this.lst_transaction.UseCompatibleStateImageBehavior = false;
+            this.lst_transaction.View = System.Windows.Forms.View.Details;
+            // 
+            // Time
+            // 
+            this.Time.Text = "Time";
+            this.Time.Width = 100;
+            // 
+            // TransactionID
+            // 
+            this.TransactionID.Text = "Transaction ID";
+            this.TransactionID.Width = 250;
+            // 
+            // confirm
+            // 
+            this.confirm.Text = "Confirm";
+            // 
+            // transType
+            // 
+            this.transType.Text = "Transaction Type";
+            this.transType.Width = 120;
+            // 
             // panel3
             // 
             this.panel3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(63)))), ((int)(((byte)(63)))), ((int)(((byte)(63)))));
@@ -800,81 +876,6 @@
             this.timer1.Enabled = true;
             this.timer1.Interval = 500;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
-            // 
-            // lst_transaction
-            // 
-            this.lst_transaction.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            this.lst_transaction.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.Time,
-            this.TransactionID,
-            this.confirm,
-            this.transType});
-            this.lst_transaction.Location = new System.Drawing.Point(24, 66);
-            this.lst_transaction.Name = "lst_transaction";
-            this.lst_transaction.Size = new System.Drawing.Size(587, 336);
-            this.lst_transaction.TabIndex = 7;
-            this.lst_transaction.UseCompatibleStateImageBehavior = false;
-            this.lst_transaction.View = System.Windows.Forms.View.Details;
-            // 
-            // lst_asset
-            // 
-            this.lst_asset.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            this.lst_asset.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader1,
-            this.columnHeader2,
-            this.columnHeader3,
-            this.columnHeader4});
-            listViewGroup5.Header = "unchecked";
-            listViewGroup5.Name = "unchecked";
-            listViewGroup6.Header = "checked";
-            listViewGroup6.Name = "checked";
-            this.lst_asset.Groups.AddRange(new System.Windows.Forms.ListViewGroup[] {
-            listViewGroup5,
-            listViewGroup6});
-            this.lst_asset.Location = new System.Drawing.Point(24, 451);
-            this.lst_asset.Name = "lst_asset";
-            this.lst_asset.Size = new System.Drawing.Size(587, 194);
-            this.lst_asset.TabIndex = 8;
-            this.lst_asset.UseCompatibleStateImageBehavior = false;
-            this.lst_asset.View = System.Windows.Forms.View.Details;
-            // 
-            // Time
-            // 
-            this.Time.Text = "Time";
-            this.Time.Width = 100;
-            // 
-            // TransactionID
-            // 
-            this.TransactionID.Text = "Transaction ID";
-            this.TransactionID.Width = 250;
-            // 
-            // confirm
-            // 
-            this.confirm.Text = "Confirm";
-            // 
-            // transType
-            // 
-            this.transType.Text = "Transaction Type";
-            this.transType.Width = 120;
-            // 
-            // columnHeader1
-            // 
-            this.columnHeader1.Text = "Asset";
-            this.columnHeader1.Width = 100;
-            // 
-            // columnHeader2
-            // 
-            this.columnHeader2.Text = "Type";
-            // 
-            // columnHeader3
-            // 
-            this.columnHeader3.Text = "Balance";
-            this.columnHeader3.Width = 150;
-            // 
-            // columnHeader4
-            // 
-            this.columnHeader4.Text = "Issure";
-            this.columnHeader4.Width = 350;
             // 
             // MainForm
             // 

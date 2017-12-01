@@ -557,5 +557,14 @@ namespace Pure.UI
                 Settings.Default.Save();
             }
         }
+
+        private void transferToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            using (TransferDialog dialog = new TransferDialog())
+            {
+                if (dialog.ShowDialog() != DialogResult.OK) return;
+                //Helper.SignAndShowInformation(dialog.GetTransaction());
+            }
+        }
     }
 }

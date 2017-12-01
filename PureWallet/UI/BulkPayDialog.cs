@@ -1,0 +1,69 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using Pure.Core;
+using Pure.Wallets;
+
+namespace Pure.UI
+{
+    public partial class BulkPayDialog : Form
+    {
+        public string AssetName => (comboBox1.SelectedItem as AssetState).GetName();
+        public BulkPayDialog(AssetState asset = null)
+        {
+            InitializeComponent();
+            if (asset == null)
+            {
+                foreach (UInt256 asset_id in Program.CurrentWallet.FindUnspentCoins().Select(p => p.Output.AssetId).Distinct())
+                {
+                    comboBox1.Items.Add(Blockchain.Default.GetAssetState(asset_id));
+                }
+            }
+            else
+            {
+                comboBox1.Items.Add(asset);
+                comboBox1.SelectedIndex = 0;
+                comboBox1.Enabled = false;
+            }
+        }
+        public TransactionOutput[] GetOutputs()
+        {
+            return textBox3.Lines.Where(p => !string.IsNullOrWhiteSpace(p)).Select(p =>
+            {
+                UInt256 asset_id = (comboBox1.SelectedItem as AssetState).AssetId;
+                string[] line = p.Split(new[] { ' ', '\t', ',' }, StringSplitOptions.RemoveEmptyEntries);
+                return new TransactionOutput
+                {
+                    AssetId = asset_id,
+                    Value = Fixed8.Parse(line[1]),
+                    ScriptHash = Wallet.ToScriptHash(line[0])
+                };
+            }).ToArray();
+        }
+
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            AssetState asset = comboBox1.SelectedItem as AssetState;
+            if (asset == null)
+            {
+                textBox3.Text = "";
+            }
+            else
+            {
+                textBox3.Text = Program.CurrentWallet.GetAvailable(asset.AssetId).ToString();
+            }
+            textBox1_TextChanged(this, EventArgs.Empty);
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+    }
+}
