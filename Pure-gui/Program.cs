@@ -105,7 +105,7 @@ namespace Pure
                 {
                     LocalNode.LoadState(fs);
                 }
-            using (Blockchain.RegisterBlockchain(new LevelDBBlockchain(Settings.Default.DataDirectoryPath)))
+            using (Blockchain.RegisterBlockchain(new LevelDBBlockchain("chain")))
             using (LocalNode = new LocalNode())
             {
                 LocalNode.UpnpEnabled = true;

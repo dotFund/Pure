@@ -46,7 +46,7 @@ namespace Pure.Cryptography
             }
         }
 
-        public static CertificateQueryResult Query(ECPoint pubkey)
+        public static CertificateQueryResult Query(Pure.Cryptography.ECC.ECPoint pubkey)
         {
             return Query(Contract.CreateSignatureRedeemScript(pubkey).ToScriptHash());
         }
@@ -95,7 +95,7 @@ namespace Pure.Cryptography
                 results[hash].Type = CertificateQueryResultType.Missing;
                 return;
             }
-            if (!hash.Equals(Contract.CreateSignatureRedeemScript(ECPoint.DecodePoint(cert.PublicKey.EncodedKeyValue.RawData, ECCurve.Secp256r1)).ToScriptHash()))
+            if (!hash.Equals(Contract.CreateSignatureRedeemScript(Pure.Cryptography.ECC.ECPoint.DecodePoint(cert.PublicKey.EncodedKeyValue.RawData, Pure.Cryptography.ECC.ECCurve.Secp256r1)).ToScriptHash()))
             {
                 results[hash].Type = CertificateQueryResultType.Missing;
                 return;
