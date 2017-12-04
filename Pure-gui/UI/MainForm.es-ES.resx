@@ -197,7 +197,7 @@
     <value>186, 22</value>
   </data>
   <data name="提取小蚁币CToolStripMenuItem.Text" xml:space="preserve">
-    <value>Reclamar &amp;NeoGas...</value>
+    <value>Reclamar &amp;PureGas...</value>
   </data>
   <data name="toolStripSeparator7.Size" type="System.Drawing.Size, System.Drawing">
     <value>183, 6</value>
@@ -287,7 +287,7 @@
     <value>236, 22</value>
   </data>
   <data name="关于AntSharesToolStripMenuItem.Text" xml:space="preserve">
-    <value>&amp;Acerca de NEO</value>
+    <value>&amp;Acerca de PURE</value>
   </data>
   <data name="帮助HToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>53, 19</value>

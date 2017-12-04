@@ -150,8 +150,8 @@ namespace Pure.UI
                             }
                             else
                             {
-                                string asset_name = asset.Asset.AssetType == AssetType.GoverningToken ? "NEO" :
-                                                    asset.Asset.AssetType == AssetType.UtilityToken ? "NeoGas" :
+                                string asset_name = asset.Asset.AssetType == AssetType.GoverningToken ? "PURE" :
+                                                    asset.Asset.AssetType == AssetType.UtilityToken ? "PureGas" :
                                                     asset.Asset.GetName();
                                 lst_asset.Items.Add(new ListViewItem(new[]
                                 {

@@ -356,8 +356,8 @@ namespace Pure.UI
                             }
                             else
                             {
-                                string asset_name = asset.Asset.AssetType == AssetType.GoverningToken ? "NEO" :
-                                                    asset.Asset.AssetType == AssetType.UtilityToken ? "NeoGas" :
+                                string asset_name = asset.Asset.AssetType == AssetType.GoverningToken ? "PURE" :
+                                                    asset.Asset.AssetType == AssetType.UtilityToken ? "PureGas" :
                                                     asset.Asset.GetName();
                                 listView2.Items.Add(new ListViewItem(new[]
                                 {
@@ -524,7 +524,7 @@ namespace Pure.UI
             using (OpenWalletDialog dialog = new OpenWalletDialog())
             {
                 if (dialog.ShowDialog() != DialogResult.OK) return;
-                if (UserWallet.GetVersion(dialog.WalletPath) < Version.Parse("1.3.5"))
+                /*if (UserWallet.GetVersion(dialog.WalletPath) < Version.Parse("1.3.5"))
                 {
                     if (MessageBox.Show(Strings.MigrateWalletMessage, Strings.MigrateWalletCaption, MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1) != DialogResult.Yes)
                         return;
@@ -534,7 +534,7 @@ namespace Pure.UI
                     File.Move(dialog.WalletPath, path_old);
                     File.Move(path_new, dialog.WalletPath);
                     MessageBox.Show($"{Strings.MigrateWalletSucceedMessage}\n{path_old}");
-                }
+                }*/
                 UserWallet wallet;
                 try
                 {

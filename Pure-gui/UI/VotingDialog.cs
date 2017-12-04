@@ -19,8 +19,8 @@ namespace Pure.UI
                 sb.EmitPush(textBox1.Lines.Length);
                 sb.Emit(OpCode.PACK);
                 sb.EmitPush(script_hash);
-                sb.EmitSysCall("Neo.Blockchain.GetAccount");
-                sb.EmitSysCall("Neo.Account.SetVotes");
+                sb.EmitSysCall("Pure.Blockchain.GetAccount");
+                sb.EmitSysCall("Pure.Account.SetVotes");
                 return new InvocationTransaction
                 {
                     Script = sb.ToArray(),

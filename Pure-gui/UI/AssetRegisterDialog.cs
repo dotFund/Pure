@@ -28,7 +28,7 @@ namespace Pure.UI
             UInt160 issuer = Wallet.ToScriptHash(comboBox4.Text);
             using (ScriptBuilder sb = new ScriptBuilder())
             {
-                sb.EmitSysCall("Neo.Asset.Create", asset_type, name, amount, precision, owner, admin, issuer);
+                sb.EmitSysCall("Pure.Asset.Create", asset_type, name, amount, precision, owner, admin, issuer);
                 return new InvocationTransaction
                 {
                     Attributes = new[]

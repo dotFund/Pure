@@ -121,7 +121,7 @@
     <value>关于</value>
   </data>
   <data name="AboutMessage" xml:space="preserve">
-    <value>NEO</value>
+    <value>PURE</value>
   </data>
   <data name="AboutVersion" xml:space="preserve">
     <value>版本：</value>
@@ -178,7 +178,7 @@
     <value>安装证书</value>
   </data>
   <data name="InstallCertificateText" xml:space="preserve">
-    <value>NEO需要安装Onchain的根证书才能对区块链上的资产进行认证，是否现在就安装证书？</value>
+    <value>PURE需要安装Onchain的根证书才能对区块链上的资产进行认证，是否现在就安装证书？</value>
   </data>
   <data name="InsufficientFunds" xml:space="preserve">
     <value>余额不足，无法创建交易。</value>
@@ -221,7 +221,7 @@
     <value>必须输入一段含有待签名数据的JSON对象。</value>
   </data>
   <data name="SystemIssuer" xml:space="preserve">
-    <value>NEO系统</value>
+    <value>PURE系统</value>
   </data>
   <data name="TradeFailedFakeDataMessage" xml:space="preserve">
     <value>验证失败，对方篡改了交易内容！</value>

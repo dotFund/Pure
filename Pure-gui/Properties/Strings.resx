@@ -121,7 +121,7 @@
     <value>About</value>
   </data>
   <data name="AboutMessage" xml:space="preserve">
-    <value>NEO</value>
+    <value>PURE</value>
   </data>
   <data name="AboutVersion" xml:space="preserve">
     <value>Version:</value>
@@ -178,7 +178,7 @@
     <value>Install the certificate</value>
   </data>
   <data name="InstallCertificateText" xml:space="preserve">
-    <value>NEO must install Onchain root certificate to validate assets on the blockchain, install it now?</value>
+    <value>PURE must install Onchain root certificate to validate assets on the blockchain, install it now?</value>
   </data>
   <data name="InsufficientFunds" xml:space="preserve">
     <value>Insufficient funds, transaction cannot be initiated.</value>

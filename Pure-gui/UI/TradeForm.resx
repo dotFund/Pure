@@ -229,7 +229,7 @@
     <value>txOutListBox1</value>
   </data>
   <data name="&gt;&gt;txOutListBox1.Type" xml:space="preserve">
-    <value>Neo.UI.TxOutListBox, neo-gui, Version=0.6.6096.32792, Culture=neutral, PublicKeyToken=null</value>
+    <value>Pure.UI.TxOutListBox, pure-gui, Version=0.6.6096.32792, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;txOutListBox1.Parent" xml:space="preserve">
     <value>groupBox1</value>

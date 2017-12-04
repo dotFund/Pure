@@ -1,5 +1,5 @@
 @echo off
-set "taskname=neo-gui.exe"
+set "taskname=pure-gui.exe"
 echo waiting...
 :wait
 ping 127.0.1 -n 3 >nul

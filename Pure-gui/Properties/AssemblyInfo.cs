@@ -9,7 +9,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("Pure-gui")]
-[assembly: AssemblyCopyright("© The Neo Project 2015-2017 Released under the MIT license")]
+[assembly: AssemblyCopyright("© The Pure Project 2017-2018 Released under the MIT license")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

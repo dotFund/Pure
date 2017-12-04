@@ -70,7 +70,7 @@ namespace Pure.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to NEO.
+        ///   Looks up a localized string similar to PURE.
         /// </summary>
         internal static string AboutMessage {
             get {
@@ -241,7 +241,7 @@ namespace Pure.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to NEO must install Onchain root certificate to validate assets on the blockchain, install it now?.
+        ///   Looks up a localized string similar to PURE must install Onchain root certificate to validate assets on the blockchain, install it now?.
         /// </summary>
         internal static string InstallCertificateText {
             get {

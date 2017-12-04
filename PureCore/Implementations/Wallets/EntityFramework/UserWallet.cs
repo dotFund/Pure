@@ -418,8 +418,10 @@ namespace Pure.Implementations.Wallets.EntityFramework
                 using (WalletDataContext ctx = new WalletDataContext(DbPath))
                 {
                     ctx.Keys.First(p => p.Name == "Height").Value = BitConverter.GetBytes(0);
-                    ctx.Database.ExecuteSqlCommand($"DELETE FROM [{nameof(Transaction)}]");
-                    ctx.Database.ExecuteSqlCommand($"DELETE FROM [{nameof(Coin)}]");
+                    string str =  nameof(Transaction) ;
+                    str = nameof(Coin);
+                    ctx.Database.ExecuteSqlCommand($"DELETE FROM [Transaction]");//{nameof(Transaction)}
+                    ctx.Database.ExecuteSqlCommand($"DELETE FROM [Coin]");//{nameof(Coin)}
                     ctx.SaveChanges();
                 }
             }

@@ -28,7 +28,7 @@ namespace Pure.UI
             string description = textBox5.Text;
             using (ScriptBuilder sb = new ScriptBuilder())
             {
-                sb.EmitSysCall("Neo.Contract.Create", script, parameter_list, return_type, need_storage, name, version, author, email, description);
+                sb.EmitSysCall("Pure.Contract.Create", script, parameter_list, return_type, need_storage, name, version, author, email, description);
                 return new InvocationTransaction
                 {
                     Script = sb.ToArray()

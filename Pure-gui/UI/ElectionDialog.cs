@@ -20,7 +20,7 @@ namespace Pure.UI
             ECPoint pubkey = (ECPoint)comboBox1.SelectedItem;
             using (ScriptBuilder sb = new ScriptBuilder())
             {
-                sb.EmitSysCall("Neo.Validator.Register", pubkey);
+                sb.EmitSysCall("Pure.Validator.Register", pubkey);
                 return new InvocationTransaction
                 {
                     Attributes = new[]
