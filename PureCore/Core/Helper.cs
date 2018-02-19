@@ -8,9 +8,6 @@ using System.Linq;
 
 namespace Pure.Core
 {
-    /// <summary>
-    /// 包含一系列签名与验证的扩展方法
-    /// </summary>
     public static class Helper
     {
         public static byte[] GetHashData(this IVerifiable verifiable)
@@ -24,12 +21,6 @@ namespace Pure.Core
             }
         }
 
-        /// <summary>
-        /// 根据传入的账户信息，对可签名的对象进行签名
-        /// </summary>
-        /// <param name="verifiable">要签名的数据</param>
-        /// <param name="key">用于签名的账户</param>
-        /// <returns>返回签名后的结果</returns>
         public static byte[] Sign(this IVerifiable verifiable, KeyPair key)
         {
             using (key.Decrypt())

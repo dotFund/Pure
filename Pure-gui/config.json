@@ -3,7 +3,7 @@
     "DataDirectoryPath": "Chain",
     "CertCachePath": "Certs",
     "NodePort": 10039,
-    "WsPort": 10039,
+    "WsPort": 10033,
     "UriPrefix": [ "http://*:10030" ],
     "SslCert": "",
     "SslCertPassword": "",

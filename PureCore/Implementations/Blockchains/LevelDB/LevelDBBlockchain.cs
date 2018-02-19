@@ -37,7 +37,8 @@ namespace Pure.Implementations.Blockchains.LevelDB
             Version version;
             Slice value;
             db = DB.Open(path, new Options { CreateIfMissing = true });
-            if (db.TryGet(ReadOptions.Default, SliceBuilder.Begin(DataEntryPrefix.SYS_Version), out value) && Version.TryParse(value.ToString(), out version) && version >= Version.Parse("1.1"))
+            if (db.TryGet(ReadOptions.Default, SliceBuilder.Begin(DataEntryPrefix.SYS_Version), out value) && 
+                Version.TryParse(value.ToString(), out version) && version >= Version.Parse("1.1"))
             {
                 ReadOptions options = new ReadOptions { FillCache = false };
                 value = db.Get(options, SliceBuilder.Begin(DataEntryPrefix.SYS_CurrentBlock));
@@ -70,7 +71,10 @@ namespace Pure.Implementations.Blockchains.LevelDB
                 }
                 if (stored_header_count == 0)
                 {
-                    Header[] headers = db.Find(options, SliceBuilder.Begin(DataEntryPrefix.DATA_Block), (k, v) => Header.FromTrimmedData(v.ToArray(), sizeof(long))).OrderBy(p => p.Index).ToArray();
+                    Header[] headers = db.Find(
+                        options, SliceBuilder.Begin(DataEntryPrefix.DATA_Block), (k, v) => 
+                        Header.FromTrimmedData(v.ToArray(), sizeof(long))
+                    ).OrderBy(p => p.Index).ToArray();
                     for (int i = 1; i < headers.Length; i++)
                     {
                         header_index.Add(headers[i].Hash);

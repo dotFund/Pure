@@ -1,18 +1,18 @@
 ﻿{
   "ProtocolConfiguration": {
-    "Magic": 1709090,
+    "Magic": 1703090,
     "AddressVersion": 23,
     "StandbyValidators": [
-      "02609107d2e11d1a8cc781eae661edfab161f8c4df5d83caceacdc0e6e0bcf5e03",
-      "03ab9c5659654478cff3e77aab78fbb97a4ce41a317c1b737b13564f06b6b3f2e8",
-      "0206841a10378bfa7c65077edc1107e88e4486baf3e6a9a0d3e8235d5fa9c08c8a",
-      "0329eeb490e527698611a0ba01d2ecb5d2bdf807b77220331d5a560edfa0c30bfc"
+      "0262eb405f672047b96e78603078863dfa474931ffc1497c651d186ae483bfbde3",
+      "03e4e59914eeb4e9a661b9b3bf56c1f1eb446f07c820c1977f03f0fe2cc00ea1ce",
+      "02fdcfa5b09c6045d97b76fb0915a11c72774390b30910a7e751dd87514ad7a82a",
+      "037f1c216993ca73e36aa76011ae9e33efe5fcfa9c0c9b315da26a4cabc5334b62"
    ],
     "SeedList": [
-      "192.168.5.90:10909",
-      "192.168.5.50:10909",
-      "192.168.5.157:10909",
-      "192.168.5.142:10909"
+      "192.168.5.90:10039",
+      "192.168.5.66:10039",
+      "192.168.5.9:10039",
+      "192.168.5.142:10039"
    ],
     "SystemFee": {
       "EnrollmentTransaction": 1000,

@@ -370,7 +370,7 @@ namespace Pure.Implementations.Wallets.EntityFramework
                             db_tx.Height = block.Index;
                     ctx.Keys.First(p => p.Name == "Height").Value = BitConverter.GetBytes(WalletHeight);
                     tx_changed = ctx.ChangeTracker.Entries<Transaction>().Where(p => p.State != EntityState.Unchanged).Select(p => p.Entity).ToArray();
-                    ctx.SaveChanges();
+                    //ctx.SaveChanges();
                 }
             }
             if (tx_changed?.Length > 0)

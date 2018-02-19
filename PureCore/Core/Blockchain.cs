@@ -10,9 +10,6 @@ using System.Linq;
 
 namespace Pure.Core
 {
-    /// <summary>
-    /// 实现区块链功能的基类
-    /// </summary>
     public abstract class Blockchain : IDisposable, IScriptTable
     {
         public static event EventHandler<BlockNotifyEventArgs> Notify;

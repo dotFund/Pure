@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Copyright>2017-2018 The Pure Project</Copyright>
     <AssemblyTitle>Neo</AssemblyTitle>
-    <Version>1.1.1001.10001</Version>
+    <Version>1.1.1001.10003</Version>
     <Authors>The Pure Project</Authors>
     <TargetFrameworks>netstandard1.6;net461</TargetFrameworks>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
@@ -17,14 +17,18 @@
     <RootNamespace>PureCore</RootNamespace>
     <Company>The Pure Project</Company>
     <Description>Pure</Description>
-    <AssemblyVersion>1.1.1001.10001</AssemblyVersion>
-    <FileVersion>1.0.1001.10001</FileVersion>
+    <AssemblyVersion>1.1.1001.10003</AssemblyVersion>
+    <FileVersion>1.0.1001.10003</FileVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|netstandard1.6|AnyCPU'">
     <DefineConstants>RELEASE;NETSTANDARD1_6</DefineConstants>
     <DebugType>none</DebugType>
     <DebugSymbols>False</DebugSymbols>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|netstandard1.6|AnyCPU'">
+    <WarningLevel>2</WarningLevel>
   </PropertyGroup>
 
   <ItemGroup>
